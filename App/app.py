@@ -75,6 +75,8 @@ with tab1:
     
     #Numerische Analyse
     if selected_variable in numeric_variables:
+        
+        #Titel
         st.subheader(f"Analyse numerischer Variable {selected_variable}")
         
         #Zwei Spalten
@@ -96,29 +98,38 @@ with tab1:
         ax2.set_ylabel("Preis")
         col2.pyplot(fig2, use_container_width=True)
         
+    #Kategorische Analyse
+    elif selected_variable in categorical_variables:
         
-##weiter hier:
-        st.subheader("Kategorische Variablen")
-    categorical_columns = ['model', 'brand']  # Beispielhafte kategorische Variablen
-    selected_categorical = st.selectbox("Wähle eine kategorische Variable", categorical_columns)
-
-    if selected_categorical:
-        st.write(f"Boxplot von {selected_categorical} gegen Preis")
+        #Titel
+        st.subheader(f"Analyse kategorischer Variable {selected_variable}")
+        
+        #Zwei Spalten
+        col1, col2 = st.columns([1, 1])
+        
+        #Barplot
+        col1.write(f"Barplot von {selected_variable} und Preis")
+        fig3, ax3 = plt.subplots(figsize=(8,3.7))
+        avg_price_by_category = data.groupby(selected_variable)["price"].mean().reset_index()        
+        sns.barplot(x=selected_variable, y="price", data=avg_price_by_category, ax=ax3, palette="Set2")
+        plt.xticks(rotation=90)
+        ax3.set_xlabel(selected_variable)
+        ax3.set_ylabel("Durchschnittlicher Preis")
+        col1.pyplot(fig3, use_container_width=True)
+        
+        #Boxplot
+        col2.write(f"Boxplot von {selected_variable} und Preis")
         fig4, ax4 = plt.subplots(figsize=(8, 3.7))
-        sns.boxplot(x=selected_categorical, y='price', data=data, ax=ax4, palette="Set3")
+        sns.boxplot(x=selected_variable, y="price", data=data, ax=ax4, palette="Set2")
         plt.xticks(rotation=90)
-        ax4.set_xlabel(selected_categorical)
-        ax4.set_ylabel('Preis')
-        st.pyplot(fig4, use_container_width=True)
+        ax4.set_xlabel(selected_variable)
+        ax4.set_ylabel("Preis")
+        col2.pyplot(fig4, use_container_width=True)
 
-        st.write(f"Barplot von {selected_categorical} gegen Preis")
-        fig5, ax5 = plt.subplots(figsize=(8, 3.7))
-        avg_price_by_category = data.groupby(selected_categorical)['price'].mean().reset_index()
-        sns.barplot(x=selected_categorical, y='price', data=avg_price_by_category, ax=ax5, palette="Set3")
-        plt.xticks(rotation=90)
-        ax5.set_xlabel(selected_categorical)
-        ax5.set_ylabel('Durchschnittspreis')
-        st.pyplot(fig5, use_container_width=True)
+
+
+
+
 
 
 
