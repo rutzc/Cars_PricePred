@@ -9,7 +9,7 @@ Created on Thu May 16 2024
 ###### Imports ######
 
 import streamlit as st
-import pands as pd
+import pandas as pd
 
 
 ###### Config ######
