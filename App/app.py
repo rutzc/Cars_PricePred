@@ -144,7 +144,7 @@ with tab2:
     #Eingabewerte abfragen für das Training des Modells        
    
     #Marke
-    make_name = st.multiselect("Automarke", options=data["make_name"].unique().sort_values(), default=[], max_selections=1)
+    make_name = st.multiselect("Automarke", options=sorted(data["make_name"].unique()), default=[], max_selections=1)
     
     #Modellname
     model_name = st.multiselect("Automodell", options=data["model_name"].unique(), default=[], max_selections=1)
