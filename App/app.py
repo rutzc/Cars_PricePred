@@ -130,13 +130,29 @@ with tab1:
         st.write("Test")
 
 
+
 ###### Tab 2 - Explorative Datenanalyse ######
 
 with tab2:
     #Subheader
-    st.header("Erkunde hier den Einfluss verschiedener Variablen auf den Preis", divider = "red")
+    st.header("Willkommen beim Auto Wiederverkaufswert-Rechner", divider = "red")
+    st.subheader("Mit dem Widerverkaufswert-Rechner erhälst du eine ungefähre Vorhersage für den Preis, den heute oder in x Jahren für den Verkauf deines Autos erhälst")
     
-    #Selection für x-Variable
+    #Anweisungen an den User
+    st.markdown("Wir bitten dich deshalb, einige Angaben über die Daten deines Fahrzeuges zu machen. Zudem solltest du uns, für eine möglichst exakte Berechnung angeben, Informationen zu deinen Fahrgewohnheiten angeben und wie lange du das Auto noch fahren möchtest.")
+    
+    #Eingabewerte abfragen für das Training des Modells        
+   
+    #Marke
+    make_name = st.multiselct("Automarke", options=data["make_name"].unique(), default=[], max_selections=1)
+    
+    #Modellname
+    model_name = st.multiselect("Automodell", options=data["model_name"].unique(), default=[], max_selections=1)
+                                    
+    #Karosserietyp
+    body_type = st.selectbox("Karosserietyp", options=data["body_type"].unique())
+    
+    
     
 
 
