@@ -125,6 +125,8 @@ with tab1:
         ax4.set_xlabel(selected_variable)
         ax4.set_ylabel("Preis")
         col2.pyplot(fig4, use_container_width=True)
+        
+        st.write("Test")
 
 
 
