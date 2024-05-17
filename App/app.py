@@ -27,7 +27,7 @@ st.set_page_config(
 ###### Definitionen ######
 @st.cache_data
 def load_data():
-    data = pd.read_csv('./Data/df_clean_final.csv')
+    data = pd.read_csv('../Data/df_clean_final.csv')
     return data
 
 
@@ -60,10 +60,10 @@ tab1, tab2 = st.tabs(["Explorative Datenanalyse", "Wiederverkaufswert-Rechner"])
 
 with tab1:
     #Subheader
-    st.header("Erkunde hier den Einfluss verschiedener Variablen auf den Preis", dvider = True)
+    st.header("Erkunde hier den Einfluss verschiedener Variablen auf den Preis", divider = "red")
     
     #Selection für x-Variable
-    selected_variable = st.selectbox("Wähle eine Variable", list(data.drop("price").columns))
+    selected_variable = st.selectbox("Wähle eine Variable", list(data.drop("price", axis=1).columns))
     
     #Tickbox für Anzeige Raw Data
     if st.checkbox("Rohdatensatz anzeigen", False):
@@ -132,12 +132,11 @@ with tab1:
 
 ###### Tab 2 - Explorative Datenanalyse ######
 
-with tab1:
+with tab2:
     #Subheader
-    st.header("Erkunde hier den Einfluss verschiedener Variablen auf den Preis", dvider = True)
+    st.header("Erkunde hier den Einfluss verschiedener Variablen auf den Preis", divider = "red")
     
     #Selection für x-Variable
-    selected_variable = st.selectbox("Wähle eine Variable", list(data.drop("price").columns))
     
 
 
