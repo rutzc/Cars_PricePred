@@ -23,49 +23,17 @@ st.set_page_config(
         initial_sidebar_state = "collapsed", #Sidebar initial eingeklappt
     )
 
-import os
 
 ###### Definitionen ######
 @st.cache_data
 def load_data():
-    # Debugging: Überprüfe den aktuellen Arbeitsordner und den Dateipfad
-    current_working_directory = os.getcwd()
-    st.write(f"Current working directory: {current_working_directory}")
-
-    # Debugging: Zeige alle Dateien im aktuellen Arbeitsordner an
-    files_in_directory = os.listdir(current_working_directory)
-    st.write(f"Files in directory: {files_in_directory}")
-
-    file_path = "./App/df_clean.csv"
-    st.write(f"File path: {file_path}")
-
-    # Check if the file exists
-    if not os.path.exists(file_path):
-        st.error(f"File not found: {file_path}")
-        return None
-
-    data = pd.read_csv(file_path)
+    data = pd.read_csv("df_clean.csv")
     return data
+
+
 
 ###### Daten laden ######
 data = load_data()
-
-# Überprüfe, ob die Daten erfolgreich geladen wurden
-if data is not None:
-    st.write(data.head())
-else:
-    st.error("Daten konnten nicht geladen werden.")
-
-###### Definitionen ######
-#@st.cache_data
-#def load_data():
- #   data = pd.read_csv("df_clean.csv")
-  #  return data
-
-
-
-###### Daten laden ######
-#data = load_data()
 
 
 
