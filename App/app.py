@@ -44,7 +44,7 @@ def load_data():
         st.error(f"File not found: {file_path}")
         return None
 
-    data = pd.read_csv(file_path)
+    data = pd.read_csv("App/clean_data.csv")
     return data
 
 ###### Daten laden ######
