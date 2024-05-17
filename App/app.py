@@ -36,7 +36,7 @@ def load_data():
     files_in_directory = os.listdir(current_working_directory)
     st.write(f"Files in directory: {files_in_directory}")
 
-    file_path = "App/df_clean.csv"
+    file_path = "./App/df_clean.csv"
     st.write(f"File path: {file_path}")
 
     # Check if the file exists
