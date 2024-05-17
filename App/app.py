@@ -36,7 +36,7 @@ def load_data():
     files_in_directory = os.listdir(current_working_directory)
     st.write(f"Files in directory: {files_in_directory}")
 
-    file_path = "df_clean_final.csv"
+    file_path = "df_clean.csv"
     st.write(f"File path: {file_path}")
 
     # Check if the file exists
@@ -44,7 +44,7 @@ def load_data():
         st.error(f"File not found: {file_path}")
         return None
 
-    data = pd.read_csv("App/clean_data.csv")
+    data = pd.read_csv(file_path)
     return data
 
 ###### Daten laden ######
