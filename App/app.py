@@ -27,7 +27,7 @@ st.set_page_config(
 ###### Definitionen ######
 @st.cache_data
 def load_data():
-    data = pd.read_csv("df_clean_final.csv")
+    data = pd.read_csv("df_clean.csv")
     return data
 
 
