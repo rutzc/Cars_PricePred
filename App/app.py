@@ -159,9 +159,9 @@ with tab2:
     #Marke
     make_name = row1_col1.selectbox("Automarke", options=[" "] + sorted(data["make_name"].unique()), index=0)
     #Modellname
-    model_name = row1_col2.selectbox("Automodell", options=[" "] + sorted(data["model_name"].unique()), index=0)                          
+    model_name = row1_col2.selectbox("Automodell", options=[" "] + sorted(data[data["make_name"]==make_name]["model_name"].unique()), index=0)                          
     #Karosserietyp
-    body_type = row1_col3.selectbox("Karosserietyp", options=[" "] + sorted(data["body_type"].unique()), index=0)
+    body_type = row1_col3.selectbox("Karosserietyp", options=[" "] + sorted(data[data["model_name"]==model_name]["body_type"].unique()), index=0)
     
     #Grid Row 2
     row2_col1, row2_col2, row2_col3 = st.columns([1,1,1])
@@ -175,9 +175,9 @@ with tab2:
     #Grid Row 3
     row3_col1, row3_col2, row3_col3 = st.columns([1,1,1])
     #Kraftstoffart
-    fuel_type = row3_col1.radio("Kraftstoffart", options=data["fuel_type"].unique())
+    fuel_type = row3_col1.radio("Kraftstoffart", options=data[data["model_name"]==model_name]["fuel_type"].unique())
     #Antriebssystem
-    wheel_system_display = row3_col2.radio("Antriebssystem", options=sorted(data["wheel_system_display"].unique()))
+    wheel_system_display = row3_col2.radio("Antriebssystem", options=sorted(data[data["model_name"]==model_name]["wheel_system_display"].unique()))
     #Manuell oder automatisch
     manual = row3_col3.radio("Schaltgetriebe oder Automatikgetriebe", options=["Schaltung", "Automatik"])
     if manual == "Schaltung":
