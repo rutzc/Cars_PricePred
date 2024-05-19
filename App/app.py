@@ -162,7 +162,7 @@ with tab2:
     fuel_type = st.radio("Kraftstoffart", options=data["fuel_type"].unique())
     
     #Durchschnittlicher Verbrauch
-    average_fuel_economy = st.slider("Durchschnittlicher Verbrauch (in km pro Liter)", min_value=float(data["average_fuel_economy"].min()), max_value=float(data["average_fuel_economy"].max()), step=1.0, value=float(data["average_fuel_economy"].median()))
+    average_fuel_economy = st.slider("Durchschnittlicher Verbrauch (in km pro Liter)", min_value=float(data["average_fuel_economy"].min()), max_value=float(data["average_fuel_economy"].max()), step=float(1), value=float(data["average_fuel_economy"].median()))
     
     #Antriebssystem
     wheel_system_display = st.radio("Antriebssystem", options=sorted(data["wheel_system_display"].unique()))
