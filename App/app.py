@@ -150,7 +150,7 @@ with tab2:
     model_name = st.multiselect("Automodell", options=data["model_name"].unique(), default=[], max_selections=1)
                                     
     #Karosserietyp
-    body_type = st.selectbox("Karosserietyp", options=data["body_type"].unique())
+    body_type = st.selectbox("Karosserietyp", options=data["body_type"].unique(), default=[])
     
     #Motortyp
     engine_type = st.selectbox("Motortyp", options=data["engine_type"].unique())
