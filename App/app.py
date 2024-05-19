@@ -159,25 +159,27 @@ with tab2:
     horsepower = st.slider("Motorleistung (in PS)", min_value=int(data["horsepower"].min()), max_value=int(data["horsepower"].max()), step=10, value=int(data["horsepower"].median()))
     
     #Kraftstoffart
-    fuel_type = st.radio("Kraftstoffart", options=sorted(data["fuel_type"]).unique())
+    fuel_type = st.radio("Kraftstoffart", options=sorted(data["fuel_type"].unique()))
     
     #Durchschnittlicher Verbrauch
-    average_fuel_economy = st.slider("Durchschnittlicher Verbrauch (in km pro Liter)", data["average_fuel_economy"].min(), data["average_fuel_economy"].max(), step=1, value=float(data["average_fuel_economy"].median()))
+    average_fuel_economy = st.slider("Durchschnittlicher Verbrauch (in km pro Liter)", min_value=float(data["average_fuel_economy"].min()), max_value=float(data["average_fuel_economy"].max()), step=1, value=float(data["average_fuel_economy"].median()))
     
     #Antriebssystem
-    wheel_system_display = st.radio("Antriebssystem", options=sorted(data["wheel_system_display"]).unique())
+    wheel_system_display = st.radio("Antriebssystem", options=sorted(data["wheel_system_display"].unique()))
     
     #Getriebe
-    transmission = st.radio("Getriebe", options=sorted(data["transmission"]).unique())
+    transmission = st.radio("Getriebe", options=sorted(data["transmission"].unique()))
     
     #Manuell oder automatisch
     manual = st.radio("Schaltgetriebe oder Automatikgetriebe", options=["Schaltung", "Automatik"])
     
     #Alter
-    age = st.slider("Alter des Fahrzeugs", data["age"].min(), data["age"].max(), step=1, value=float(data["age"].median()))
+    age = st.slider("Alter des Fahrzeugs", min_value=int(data["age"].min()), max_value=int(data["age"].max()), step=1, value=0)
 
     #KM-Stand
-    mileage = st.slider("Kilometerstand", data["mileage"].min(), data["mileage"].max(), step=100, value=0)
+    mileage = st.slider("Kilometerstand", min_value=float(data["mileage"].min()), max_value=float(data["mileage"].max()), step=100, value=0)
+    
+    
     
     
 
