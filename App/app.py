@@ -152,10 +152,14 @@ with tab2:
     #Karosserietyp
     body_type = st.selectbox("Karosserietyp", options=data["body_type"].unique())
     
+    #Motortyp
+    engine_type = st.selectbox("Motortyp", options=data["engine_type"].unique())
+    
     
     
 
-
+    #numeric_variables = ["age","average_fuel_economy", "horsepower", "mileage"]
+    #categorical_variables = ["body_type", "engine_type", "fuel_type", "make_name", "model_name", "transmission", "wheel_system_display"]
 
 
 
