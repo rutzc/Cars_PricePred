@@ -256,7 +256,8 @@ with tab2:
             st.markdown(f"Der Wiederverkaufswert deines Autos liegt bei :red-background[**{price_formatted}** CHF]")
             
             #Anzeige eines Plots, der einem die Preise über die Zeit zeigt von heute bis in gewünschtes Verkaufsjahr + 10
-            if st.button(f"Zeige mir die Entwicklung des Wiederverkaufswert ab heute bis in {jahre+10} Jahren"):
+            show_plot = st.checkbox(f"Zeige mir die Entwicklung des Wiederverkaufswert ab heute bis in {jahre+10} Jahren")
+            if show_plot:
                 #Variablen initialisieren
                 jahre_plus10 = jahre + 10 #Gewünschtes Verkaufsjahr + 10
                 jahr_range = np.arange(0, jahre_plus10+1) #1+ wegen Range
