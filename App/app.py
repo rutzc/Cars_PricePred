@@ -156,13 +156,13 @@ with tab2:
     engine_type = st.multiselect("Motortyp", options=sorted(data["engine_type"].unique()), default=[], max_selections=1)
     
     #Motorleistung
-    horsepower = st.slider("Motorleistung (in PS)", data["horsepower"].min(), data["horsepower"].max(), step=10, value=data["horsepower"].median())
+    horsepower = st.slider("Motorleistung (in PS)", data["horsepower"].min(), data["horsepower"].max(), step=10, value=float(data["horsepower"].median()))
     
     #Kraftstoffart
     fuel_type = st.radio("Kraftstoffart", options=sorted(data["fuel_type"]).unique())
     
     #Durchschnittlicher Verbrauch
-    average_fuel_economy = st.slider("Durchschnittlicher Verbrauch (in km pro Liter)", data["average_fuel_economy"].min(), data["average_fuel_economy"].max(), step=1, value=data["average_fuel_economy"].median())
+    average_fuel_economy = st.slider("Durchschnittlicher Verbrauch (in km pro Liter)", data["average_fuel_economy"].min(), data["average_fuel_economy"].max(), step=1, value=float(data["average_fuel_economy"].median()))
     
     #Antriebssystem
     wheel_system_display = st.radio("Antriebssystem", options=sorted(data["wheel_system_display"]).unique())
@@ -174,7 +174,7 @@ with tab2:
     manual = st.radio("Schaltgetriebe oder Automatikgetriebe", options=["Schaltung", "Automatik"])
     
     #Alter
-    age = st.slider("Alter des Fahrzeugs", data["age"].min(), data["age"].max(), step=1, value=data["age"].median())
+    age = st.slider("Alter des Fahrzeugs", data["age"].min(), data["age"].max(), step=1, value=float(data["age"].median()))
 
     #KM-Stand
     mileage = st.slider("Kilometerstand", data["mileage"].min(), data["mileage"].max(), step=100, value=0)
