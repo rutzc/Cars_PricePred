@@ -178,10 +178,10 @@ with tab2:
     
     
     #Abfrage über Zeitpunkt des Wiederverkaufs
-    jahre = st.slider("In wie vielen Jahren möchtest du dein Auto gerne verkaufen", 0, 50, 0)
+    jahre = st.number_input("In wie vielen Jahren möchtest du dein Auto gerne verkaufen", min_value=0, value=0, step=1)
     
     #Abfrage über jährlich gefahrene Kilometer
-    km_jahrlich = st.number_input("Wie viele Kilometer fährst du ungefähr jährlich")
+    km_jahrlich = st.slider("Wie viele Kilometer fährst du ungefähr jährlich", min_value=0, max_value=60000, value=15000)
     
     
 
