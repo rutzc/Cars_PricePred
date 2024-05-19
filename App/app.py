@@ -147,19 +147,42 @@ with tab2:
     make_name = st.multiselect("Automarke", options=sorted(data["make_name"].unique()), default=[], max_selections=1)
     
     #Modellname
-    model_name = st.multiselect("Automodell", options=data["model_name"].unique(), default=[], max_selections=1)
+    model_name = st.multiselect("Automodell", options=sorted(data["model_name"].unique()), default=[], max_selections=1)
                                     
     #Karosserietyp
-    body_type = st.selectbox("Karosserietyp", options=data["body_type"].unique(), default=[])
+    body_type = st.multiselect("Karosserietyp", options=sorted(data["body_type"]).unique(), default=[], max_selections=1)
     
     #Motortyp
-    engine_type = st.selectbox("Motortyp", options=data["engine_type"].unique())
+    engine_type = st.selectbox("Motortyp", options=sorted(data["engine_type"]).unique(), default=[], max_selections=1)
     
+    #Motorleistung
+    horsepower = st.slider("Motorleistung (in PS)", data["horsepower"].min(), data["horsepower"].max(), step=10, value=data["horsepower"].median())
+    
+    #Kraftstoffart
+    fuel_type = st.radio("Kraftstoffart", options=sorted(data["fuel_type"]).unique())
+    
+    #Durchschnittlicher Verbrauch
+    average_fuel_economy = st.slider("Durchschnittlicher Verbrauch (in km pro Liter)", data["average_fuel_economy"].min(), data["average_fuel_economy"].max(), step=1, value=data["average_fuel_economy"].median())
+    
+    #Antriebssystem
+    wheel_system_display = st.radio("Antriebssystem", options=sorted(data["wheel_system_display"]).unique())
+    
+    #Getriebe
+    transmission = st.radio("Getriebe", options=sorted(data["transmission"]).unique())
+    
+    #Manuell oder automatisch
+    manual = st.radio("Schaltgetriebe oder Automatikgetriebe", options=["Schaltung", "Automatik"])
+    
+    #Alter
+    age = st.slider("Alter des Fahrzeugs", data["age"].min(), data["age"].max(), step=1, value=data["age"].median())
+
+    #KM-Stand
+    mileage = st.slider("Kilometerstand", data["mileage"].min(), data["mileage"].max(), step=100, value=0)
     
     
 
-    #numeric_variables = ["age","average_fuel_economy", "horsepower", "mileage"]
-    #categorical_variables = ["body_type", "engine_type", "fuel_type", "make_name", "model_name", "transmission", "wheel_system_display"]
+    
+
 
 
 
