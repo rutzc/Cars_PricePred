@@ -159,7 +159,7 @@ with tab2:
     horsepower = st.slider("Motorleistung (in PS)", min_value=int(data["horsepower"].min()), max_value=int(data["horsepower"].max()), step=10, value=int(data["horsepower"].median()))
     
     #Kraftstoffart
-    fuel_type = st.radio("Kraftstoffart", options=sorted(data["fuel_type"].unique()))
+    fuel_type = st.radio("Kraftstoffart", options=data["fuel_type"].unique())
     
     #Durchschnittlicher Verbrauch
     average_fuel_economy = st.slider("Durchschnittlicher Verbrauch (in km pro Liter)", min_value=float(data["average_fuel_economy"].min()), max_value=float(data["average_fuel_economy"].max()), step=1, value=float(data["average_fuel_economy"].median()))
