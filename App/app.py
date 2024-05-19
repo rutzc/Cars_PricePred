@@ -32,13 +32,13 @@ st.set_page_config(
 #Definition für das Laden der Daten
 @st.cache_data #https://docs.streamlit.io/develop/concepts/architecture/caching
 def load_data():
-    data = pd.read_csv("./App/df_clean.csv")
+    data = pd.read_csv("./App/clean_data.csv")
     return data
 
 #Definition für das Laden des Modells
 @st.cache(allow_output_mutation=True)
 def load_model():
-    filename = "./App/finalized_model_age.sav"
+    filename = "./App/model.sav"
     loaded_model = pickle.load(open(filename, "rb"))
     return(loaded_model)
 
@@ -84,7 +84,7 @@ with tab1:
     
     #Numerische und kategorielle Variablen trennen
     numeric_variables = ["age","average_fuel_economy", "horsepower", "mileage"]
-    categorical_variables = ["body_type", "engine_type", "fuel_type", "make_name", "model_name", "manual", "wheel_system_display"]
+    categorical_variables = ["body_type", "fuel_type", "make_name", "model_name", "manual", "wheel_system_display"]
     
     #Numerische Analyse
     if selected_variable in numeric_variables:
@@ -165,13 +165,11 @@ with tab2:
     body_type = row1_col3.selectbox("Karosserietyp", options=[" "] + sorted(data[data["model_name"]==model_name]["body_type"].unique()), index=0)
     
     #Grid Row 2
-    row2_col1, row2_col2, row2_col3 = st.columns([1,1,1])
-    #Motortyp
-    engine_type = row2_col1.selectbox("Motortyp", options=[" "] + sorted(data["engine_type"].unique()), index=0)
+    row2_col1, row2_col2 = st.columns([1,1])
     #Motorleistung
     horsepower = row2_col2.slider("Motorleistung (in PS)", min_value=int(data["horsepower"].min()), max_value=int(data["horsepower"].max()), step=10, value=int(data["horsepower"].median()))
     #Durchschnittlicher Verbrauch
-    average_fuel_economy = row2_col3.slider("Durchschnittlicher Verbrauch (in km pro Liter)", min_value=float(data["average_fuel_economy"].min()), max_value=float(data["average_fuel_economy"].max()), step=float(1), value=float(data["average_fuel_economy"].median()))
+    average_fuel_economy = row2_col2.slider("Durchschnittlicher Verbrauch (in km pro Liter)", min_value=float(data["average_fuel_economy"].min()), max_value=float(data["average_fuel_economy"].max()), step=float(1), value=float(data["average_fuel_economy"].median()))
     
     #Grid Row 3
     row3_col1, row3_col2, row3_col3 = st.columns([1,1,1])
@@ -214,7 +212,6 @@ with tab2:
         auto_user = pd.DataFrame({"make_name": [make_name], 
                               "model_name": [model_name], 
                               "body_type": [body_type], 
-                              "engine_type": [engine_type],
                               "horsepower": [horsepower], 
                               "average_fuel_economy": [average_fuel_economy], 
                               "fuel_type": [fuel_type], 
@@ -226,7 +223,6 @@ with tab2:
         auto_user = auto_user.astype({"make_name": "object", 
                               "model_name": "object", 
                               "body_type": "object", 
-                              "engine_type": "object",
                               "horsepower": "int", 
                               "average_fuel_economy": "float", 
                               "fuel_type": "object", 
