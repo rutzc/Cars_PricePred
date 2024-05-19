@@ -127,11 +127,10 @@ with tab1:
         ax4.set_ylabel("Preis")
         col2.pyplot(fig4, use_container_width=True)
         
-        st.write("Test")
+        
 
 
-
-###### Tab 2 - Explorative Datenanalyse ######
+###### Tab 2 - Rechner ######
 
 with tab2:
     #Subheader
@@ -142,44 +141,45 @@ with tab2:
     st.markdown("Wir bitten dich deshalb, einige Angaben über die Daten deines Fahrzeuges zu machen. Zudem solltest du uns, für eine möglichst exakte Berechnung angeben, Informationen zu deinen Fahrgewohnheiten angeben und wie lange du das Auto noch fahren möchtest.")
     
     #Eingabewerte abfragen für das Training des Modells        
-   
+    
+    #Grid Row 1
+    row1_col1, row1_col2, row1_col3 = st.columns([1,1,1])
     #Marke
-    make_name = st.multiselect("Automarke", options=sorted(data["make_name"].unique()), default=[], max_selections=1)
-    
+    make_name = row1_col1.multiselect("Automarke", options=sorted(data["make_name"].unique()), default=[], max_selections=1)
     #Modellname
-    model_name = st.multiselect("Automodell", options=sorted(data["model_name"].unique()), default=[], max_selections=1)
-                                    
+    model_name = row1_col2.multiselect("Automodell", options=sorted(data["model_name"].unique()), default=[], max_selections=1)                          
     #Karosserietyp
-    body_type = st.multiselect("Karosserietyp", options=sorted(data["body_type"].unique()), default=[], max_selections=1)
+    body_type = row1_col3.multiselect("Karosserietyp", options=sorted(data["body_type"].unique()), default=[], max_selections=1)
     
+    #Grid Row 2
+    row2_col1, row2_col2, row2_col3 = st.columns([1,1,1])
     #Motortyp
-    engine_type = st.multiselect("Motortyp", options=sorted(data["engine_type"].unique()), default=[], max_selections=1)
-    
+    engine_type = row2_col1.multiselect("Motortyp", options=sorted(data["engine_type"].unique()), default=[], max_selections=1)
     #Motorleistung
-    horsepower = st.slider("Motorleistung (in PS)", min_value=int(data["horsepower"].min()), max_value=int(data["horsepower"].max()), step=10, value=int(data["horsepower"].median()))
-    
-    #Kraftstoffart
-    fuel_type = st.radio("Kraftstoffart", options=data["fuel_type"].unique())
-    
+    horsepower = row2_col2.slider("Motorleistung (in PS)", min_value=int(data["horsepower"].min()), max_value=int(data["horsepower"].max()), step=10, value=int(data["horsepower"].median()))
     #Durchschnittlicher Verbrauch
-    average_fuel_economy = st.slider("Durchschnittlicher Verbrauch (in km pro Liter)", min_value=float(data["average_fuel_economy"].min()), max_value=float(data["average_fuel_economy"].max()), step=float(1), value=float(data["average_fuel_economy"].median()))
+    average_fuel_economy = row2_col3.slider("Durchschnittlicher Verbrauch (in km pro Liter)", min_value=float(data["average_fuel_economy"].min()), max_value=float(data["average_fuel_economy"].max()), step=float(1), value=float(data["average_fuel_economy"].median()))
     
+    #Grid Row 3
+    row3_col1, row3_col2, row3_col3 = st.columns([1,1,1])
+    #Kraftstoffart
+    fuel_type = row3_col1.radio("Kraftstoffart", options=data["fuel_type"].unique())
     #Antriebssystem
-    wheel_system_display = st.radio("Antriebssystem", options=sorted(data["wheel_system_display"].unique()))
-    
+    wheel_system_display = row3_col2.radio("Antriebssystem", options=sorted(data["wheel_system_display"].unique()))
     #Manuell oder automatisch
-    manual = st.radio("Schaltgetriebe oder Automatikgetriebe", options=["Schaltung", "Automatik"])
+    manual = row3_col3.radio("Schaltgetriebe oder Automatikgetriebe", options=["Schaltung", "Automatik"])
     
+    #Grid Row 4
+    row4_col1, row4_col2 = st.columns([1,1])
     #Alter
-    age = st.slider("Alter des Fahrzeugs", min_value=int(data["age"].min()), max_value=int(data["age"].max()), step=1, value=0)
-
+    age = row4_col1.slider("Alter des Fahrzeugs", min_value=int(data["age"].min()), max_value=int(data["age"].max()), step=1, value=0)
     #KM-Stand
-    mileage = st.slider("Kilometerstand", min_value=float(data["mileage"].min()), max_value=float(data["mileage"].max()), step=float(100), value=float(0))
+    mileage = row4_col2.slider("Kilometerstand", min_value=float(data["mileage"].min()), max_value=float(data["mileage"].max()), step=float(100), value=float(0))
     
-    
+    #Grid Row 5
+    row4_col1, row4_col2 = st.columns([1,1])
     #Abfrage über Zeitpunkt des Wiederverkaufs
     jahre = st.number_input("In wie vielen Jahren möchtest du dein Auto gerne verkaufen", min_value=0, value=0, step=1)
-    
     #Abfrage über jährlich gefahrene Kilometer
     km_jahrlich = st.slider("Wie viele Kilometer fährst du ungefähr jährlich", min_value=0, max_value=60000, value=15000)
     
