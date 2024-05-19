@@ -307,7 +307,7 @@ with tab2:
             ax.set_title("Entwicklung Wiederverkaufswert")
             ax.set_xlabel("Jahre ab heute")
             ax.set_ylabel("Wiederverkaufswert (CHF)")
-            st.pyplot(fig)
+            st.pyplot(fig, use_container_width=True)
             st.divider()
     
 
