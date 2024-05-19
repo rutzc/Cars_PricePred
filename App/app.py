@@ -233,7 +233,7 @@ with tab2:
     
     #Alle Dummy-Spalten ergänzen und mit 0 füllen 
     dummy_columns = pd.get_dummies(data.drop(columns=["price"]), drop_first = True).columns
-    auto_user = auto_user.reindex(columns=dummy_columns, fill_values=0) 
+    auto_user = auto_user.reindex(columns=dummy_columns, fill_value=0) 
 
     #Verkaufswert-Vorhersage
     st.subheader("Vorhersage für den Wiederverkaufswert deines Autos basierend auf deinen Angaben")
