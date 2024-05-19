@@ -189,8 +189,8 @@ with tab2:
     row4_col1, row4_col2 = st.columns([1,1])
     #Alter
     age = row4_col1.slider("Alter des Fahrzeugs", min_value=int(data["age"].min()), max_value=int(data["age"].max()), step=1, value=0)
-    #KM-Stand
-    mileage = row4_col2.slider("Kilometerstand", min_value=float(data["mileage"].min()), max_value=float(data["mileage"].max()), step=float(100), value=float(0))
+    #Kilometerstand
+    mileage = row4_col2.number_input("Kilometerstand", value=None, placeholder="Gib eine Zahl ein (in km)...")
     
     #Grid Row 5
     row5_col1, row5_col2 = st.columns([1,1])
