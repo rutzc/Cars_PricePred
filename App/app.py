@@ -167,9 +167,6 @@ with tab2:
     #Antriebssystem
     wheel_system_display = st.radio("Antriebssystem", options=sorted(data["wheel_system_display"].unique()))
     
-    #Getriebe
-    transmission = st.radio("Getriebe", options=sorted(data["transmission"].unique()))
-    
     #Manuell oder automatisch
     manual = st.radio("Schaltgetriebe oder Automatikgetriebe", options=["Schaltung", "Automatik"])
     
@@ -177,7 +174,7 @@ with tab2:
     age = st.slider("Alter des Fahrzeugs", min_value=int(data["age"].min()), max_value=int(data["age"].max()), step=1, value=0)
 
     #KM-Stand
-    mileage = st.slider("Kilometerstand", min_value=float(data["mileage"].min()), max_value=float(data["mileage"].max()), step=100, value=0)
+    mileage = st.slider("Kilometerstand", min_value=float(data["mileage"].min()), max_value=float(data["mileage"].max()), step=float(100), value=float(0))
     
     
     
