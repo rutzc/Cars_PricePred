@@ -302,13 +302,14 @@ with tab2:
                         price = price = model.predict(auto_user)
                         prices.append(price[0])
                     
-        #Plot erstellen
-        fig, ax = plt.subplots()
-        ax.plot(jahr_range, prices, marker="o")
-        ax.set_title("Entwicklung Wiederverkaufswert")
-        ax.set_xlabel("Jahre ab heute")
-        ax.set_ylabel("Wiederverkaufswert (CHF)")
-        st.pyplot(fig, use_container_width=True)
+                #Plot erstellen
+                fig, ax = plt.subplots()
+                ax.plot(jahr_range, prices, marker="o")
+                ax.set_title("Entwicklung Wiederverkaufswert")
+                ax.set_xlabel("Jahre ab heute")
+                ax.set_ylabel("Wiederverkaufswert (CHF)")
+                st.pyplot(fig, use_container_width=True)
+                st.divider()
         
     
 
