@@ -13,7 +13,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pickle
-
+import numpy as np
 
 
 ###### Config ######
@@ -254,10 +254,61 @@ with tab2:
             price_chf = price_usd * usd_chf
             price_formatted = f"{price_chf[0]:,.0f}".replace(",", "'") #Tiefkomma mit Hochkamma ersetzen
             st.markdown(f"Der Wiederverkaufswert deines Autos liegt bei :red-background[**{price_formatted}** CHF]")
-            st.divider()
             
-            #Anzeige eines Plots, der einem die Preise über die Zeit zeigt
-        
+            #Anzeige eines Plots, der einem die Preise über die Zeit zeigt von heute bis in gewünschtes Verkaufsjahr + 10
+            jahre_plus10 = jahre + 10 +1 #Gewünschtes Verkaufsjahr + 10 + 1(wegen Range)
+            if on and st.button(f"Zeige mir die Entwicklung des Wiederverkaufswert ab heute bis in {jahre_plus10} Jahren"):
+                st.divider()
+                jahr_range = np.arange(0, jahre_plus10)
+                prices = []
+                
+                #Für jedes Jahr DataFrame erstellen -> mittels Modell Preis-Vorhersage erstellen -> Preis zur Liste hinzufügen
+                for jahre in jahr_range: 
+                    age_verkauf = age + jahre
+                    km_verkauf = mileage + (jahre * km_jahrlich)
+                    
+                    #Alle User Inputs in ein DataFrame für spätere Vorhersage
+                    auto_user = pd.DataFrame({"make_name": [make_name], 
+                                          "model_name": [model_name], 
+                                          "body_type": [body_type], 
+                                          "horsepower": [horsepower], 
+                                          "average_fuel_economy": [average_fuel_economy], 
+                                          "fuel_type": [fuel_type], 
+                                          "wheel_system_display": [wheel_system_display], 
+                                          "manual": [manual], 
+                                          "age": [age_verkauf], 
+                                          "mileage": [km_verkauf]})
+                    #Konvertierung Datentypen
+                    auto_user = auto_user.astype({"make_name": "object", 
+                                          "model_name": "object", 
+                                          "body_type": "object", 
+                                          "horsepower": "int", 
+                                          "average_fuel_economy": "float", 
+                                          "fuel_type": "object", 
+                                          "wheel_system_display": "object", 
+                                          "manual": "int", 
+                                          "age": "int", 
+                                          "mileage": "float"})
+                    
+                    #Dummy-Variablen erstellen
+                    auto_user = pd.get_dummies(auto_user, drop_first = True)
+                
+                    #Alle Dummy-Spalten ergänzen und mit 0 füllen 
+                    dummy_columns = pd.get_dummies(data.drop(columns=["price"]), drop_first = True).columns
+                    auto_user = auto_user.reindex(columns=dummy_columns, fill_value=0) 
+                    
+                    #Preis zur Preisliste hinzufügen
+                    if not auto_user.empty:
+                        price = price = model.predict(auto_user)
+                        prices.append(price[0])
+                    
+        #Plot erstellen
+        fig, ax = plt.subplots()
+        ax.plot(jahr_range, prices, marker="o")
+        ax.set_title("Entwicklung Wiederverkaufswert")
+        ax.set_xlabel("Jahre ab heute")
+        ax.set_ylabel("Wiederverkaufswert (CHF)")
+        st.pyplot(fig, use_container_width=True)
         
     
 
