@@ -177,6 +177,11 @@ with tab2:
     mileage = st.slider("Kilometerstand", min_value=float(data["mileage"].min()), max_value=float(data["mileage"].max()), step=float(100), value=float(0))
     
     
+    #Abfrage über Zeitpunkt des Wiederverkaufs
+    jahre = st.slider("In wie vielen Jahren möchtest du dein Auto gerne verkaufen", 0, 50, 0)
+    
+    #Abfrage über jährlich gefahrene Kilometer
+    km_jahrlich = st.number_input("Wie viele Kilometer fährst du ungefähr jährlich")
     
     
 
