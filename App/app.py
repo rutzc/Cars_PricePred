@@ -263,9 +263,9 @@ with tab2:
                 prices = []
                 
                 #Für jedes Jahr DataFrame erstellen -> mittels Modell Preis-Vorhersage erstellen -> Preis zur Liste hinzufügen
-                for jahre in jahr_range: 
-                    age_verkauf = age + jahre
-                    km_verkauf = mileage + (jahre * km_jahrlich)
+                for jahr in jahr_range: 
+                    age_verkauf = age + jahr
+                    km_verkauf = mileage + (jahr * km_jahrlich)
                     
                     #Alle User Inputs in ein DataFrame für spätere Vorhersage
                     auto_user = pd.DataFrame({"make_name": [make_name], 
