@@ -199,12 +199,18 @@ with tab2:
     #Abfrage über jährlich gefahrene Kilometer
     km_jahrlich = row5_col2.slider("Wie viele Kilometer fährst du ungefähr jährlich", min_value=0, max_value=60000, value=15000)
     
-    #Berechnung zukünftiges Alter und Kilometerstand
-    age_verkauf = age + jahre
-    km_verkauf = mileage + (jahre * km_jahrlich)
+    #Bestätigung
+    on = st.toggle("Ich bestätige hiermit, dass ich die Werte vollständig und korrekt erfasst habe")
     
-    #Alle User Inputs in ein DataFrame für spätere Vorhersage
-    auto_user = pd.DataFrame({"make_name": [make_name], 
+    #Vorhersage
+    if on and st.button("Berechne Wiederverkaufswert"): 
+
+        #Berechnung zukünftiges Alter und Kilometerstand
+        age_verkauf = age + jahre
+        km_verkauf = mileage + (jahre * km_jahrlich)
+    
+        #Alle User Inputs in ein DataFrame für spätere Vorhersage
+        auto_user = pd.DataFrame({"make_name": [make_name], 
                               "model_name": [model_name], 
                               "body_type": [body_type], 
                               "engine_type": [engine_type],
@@ -215,8 +221,8 @@ with tab2:
                               "manual": [manual], 
                               "age": [age_verkauf], 
                               "mileage": [km_verkauf]})
-    #Konvertierung Datentypen
-    auto_user = auto_user.astype({"make_name": "object", 
+        #Konvertierung Datentypen
+        auto_user = auto_user.astype({"make_name": "object", 
                               "model_name": "object", 
                               "body_type": "object", 
                               "engine_type": "object",
@@ -228,22 +234,20 @@ with tab2:
                               "age": "int", 
                               "mileage": "float"})
     
-    #Dummy-Variablen erstellen
-    auto_user = pd.get_dummies(auto_user, drop_first = True)
+        #Dummy-Variablen erstellen
+        auto_user = pd.get_dummies(auto_user, drop_first = True)
     
-    #Alle Dummy-Spalten ergänzen und mit 0 füllen 
-    dummy_columns = pd.get_dummies(data.drop(columns=["price"]), drop_first = True).columns
-    auto_user = auto_user.reindex(columns=dummy_columns, fill_value=0) 
+        #Alle Dummy-Spalten ergänzen und mit 0 füllen 
+        dummy_columns = pd.get_dummies(data.drop(columns=["price"]), drop_first = True).columns
+        auto_user = auto_user.reindex(columns=dummy_columns, fill_value=0) 
 
-    #Verkaufswert-Vorhersage
-    st.subheader("Vorhersage für den Wiederverkaufswert deines Autos basierend auf deinen Angaben")
+        #Verkaufswert-Vorhersage
+        st.subheader("Vorhersage für den Wiederverkaufswert deines Autos basierend auf deinen Angaben")
     
-    #Berechnung, sobald alle User Inputs eingegeben
-    if not auto_user.empty:
-        price = model.predict(auto_user) #Berechnung des Preises über Modell
+        #Berechnung, sobald alle User Inputs eingegeben
+        if not auto_user.empty:
+            price = model.predict(auto_user) #Berechnung des Preises über Modell
         
-        st.markdown(f"Der Wiederverkaufswert deines Autos liegt bei :red-background[{price[0]:,.2f} USD]**")
+            st.markdown(f"Der Wiederverkaufswert deines Autos liegt bei :red-background[{price[0]:,.2f} USD]")
     
-    else:
-        st.markdown("Bitte Werte vollständig ausfüllen")
 
