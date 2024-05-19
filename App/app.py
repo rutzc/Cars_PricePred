@@ -179,9 +179,9 @@ with tab2:
     #Grid Row 5
     row5_col1, row5_col2 = st.columns([1,1])
     #Abfrage über Zeitpunkt des Wiederverkaufs
-    jahre = st.number_input("In wie vielen Jahren möchtest du dein Auto gerne verkaufen", min_value=0, value=0, step=1)
+    jahre = row5_col1.number_input("In wie vielen Jahren möchtest du dein Auto gerne verkaufen", min_value=0, value=0, step=1)
     #Abfrage über jährlich gefahrene Kilometer
-    km_jahrlich = st.slider("Wie viele Kilometer fährst du ungefähr jährlich", min_value=0, max_value=60000, value=15000)
+    km_jahrlich = row5_col2.slider("Wie viele Kilometer fährst du ungefähr jährlich", min_value=0, max_value=60000, value=15000)
     
     
 
