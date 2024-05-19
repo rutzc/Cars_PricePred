@@ -207,7 +207,7 @@ with tab2:
     on = st.toggle("Ich bestätige hiermit, dass ich die Werte vollständig und korrekt erfasst habe")
     
     #Vorhersage
-    if on and st.button("Berechne Wiederverkaufswert"): 
+    if on and st.button("Berechne Wiederverkaufswert", type="secondary"): 
 
         #Berechnung zukünftiges Alter und Kilometerstand
         age_verkauf = age + jahre
@@ -256,7 +256,7 @@ with tab2:
             st.markdown(f"Der Wiederverkaufswert deines Autos liegt bei :red-background[**{price_formatted}** CHF]")
             
     #Anzeige eines Plots, der einem die Preise über die Zeit zeigt von heute bis in gewünschtes Verkaufsjahr + 10
-    if st.button(f"Zeige mir die Entwicklung des Wiederverkaufswert ab heute bis in {jahre+10} Jahren"):
+    if on and st.button(f"Zeige mir die Entwicklung des Wiederverkaufswert ab heute bis in {jahre+10} Jahren"):
         #Variablen initialisieren
         jahre_plus10 = jahre + 10 #Gewünschtes Verkaufsjahr + 10
         jahr_range = np.arange(0, jahre_plus10+1) #1+ wegen Range
