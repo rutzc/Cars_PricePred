@@ -36,7 +36,7 @@ def load_data():
     return data
 
 #Definition für das Laden des Modells
-#@st.cache(allow_output_mutation=True)
+@st.cache(allow_output_mutation=True)
 def load_model():
     filename = "./App/finalized_model_age.sav"
     loaded_model = pickle.load(open(filename, "rb"))
@@ -231,13 +231,9 @@ with tab2:
     #Dummy-Variablen erstellen
     auto_user = pd.get_dummies(auto_user, drop_first = True)
     
-    #Alle Dummy-Spalten ergänzen und mit 0 füllen (vom User Input fehlen viele Dummy-Columns) #Code von ChatGPT erhalten und selber die Plausibilität nachvollzogen
-    data_dummies = pd.get_dummies(data, drop_first = True)
-    missing_cols = set(data_dummies.columns) - set(auto_user.columns) #Über set die Columns in eine ungeordnete Menge bringen, dann die Spalten des ursprünglichen DataSet - Spalten des User-Input DataSet rechnen, um die Missing_Columns zu erhalten
-    for col in missing_cols: #Für jede Spalte in Missing_Columns wird im DataSet des Users eine 0 ergänzt
-        auto_user[col] = 0
-    auto_user = auto_user[data.columns.drop("price")] #Spaltenreihenfolge vom ursprünglichen Dataset übernehmen und Price aus dem ursprünglichen DataSet droppen (Vorhersagevariable)
-
+    #Alle Dummy-Spalten ergänzen und mit 0 füllen 
+    dummy_columns = pd.get_dummies(data.drop(columns=["price"]), drop_first = True).columns
+    auto_user = auto_user.reindex(columns=dummy_columns, fill_values=0) 
 
     #Verkaufswert-Vorhersage
     st.subheader("Vorhersage für den Wiederverkaufswert deines Autos basierend auf deinen Angaben")
