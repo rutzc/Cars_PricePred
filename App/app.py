@@ -177,7 +177,7 @@ with tab2:
     mileage = row4_col2.slider("Kilometerstand", min_value=float(data["mileage"].min()), max_value=float(data["mileage"].max()), step=float(100), value=float(0))
     
     #Grid Row 5
-    row4_col1, row4_col2 = st.columns([1,1])
+    row5_col1, row5_col2 = st.columns([1,1])
     #Abfrage über Zeitpunkt des Wiederverkaufs
     jahre = st.number_input("In wie vielen Jahren möchtest du dein Auto gerne verkaufen", min_value=0, value=0, step=1)
     #Abfrage über jährlich gefahrene Kilometer
