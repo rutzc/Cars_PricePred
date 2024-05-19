@@ -84,7 +84,7 @@ with tab1:
     
     #Numerische und kategorielle Variablen trennen
     numeric_variables = ["age","average_fuel_economy", "horsepower", "mileage"]
-    categorical_variables = ["body_type", "engine_type", "fuel_type", "make_name", "model_name", "transmission", "wheel_system_display"]
+    categorical_variables = ["body_type", "engine_type", "fuel_type", "make_name", "model_name", "manual", "wheel_system_display"]
     
     #Numerische Analyse
     if selected_variable in numeric_variables:
@@ -157,16 +157,16 @@ with tab2:
     #Grid Row 1
     row1_col1, row1_col2, row1_col3 = st.columns([1,1,1])
     #Marke
-    make_name = row1_col1.multiselect("Automarke", options=sorted(data["make_name"].unique()), default=[], max_selections=1)
+    make_name = row1_col1.selectbox("Automarke", options=[" "] + sorted(data["make_name"].unique()), index=0)
     #Modellname
-    model_name = row1_col2.multiselect("Automodell", options=sorted(data["model_name"].unique()), default=[], max_selections=1)                          
+    model_name = row1_col2.selectbox("Automodell", options=[" "] + sorted(data["model_name"].unique()), index=0)                          
     #Karosserietyp
-    body_type = row1_col3.multiselect("Karosserietyp", options=sorted(data["body_type"].unique()), default=[], max_selections=1)
+    body_type = row1_col3.selectbox("Karosserietyp", options=[" "] + sorted(data["body_type"].unique()), index=0)
     
     #Grid Row 2
     row2_col1, row2_col2, row2_col3 = st.columns([1,1,1])
     #Motortyp
-    engine_type = row2_col1.multiselect("Motortyp", options=sorted(data["engine_type"].unique()), default=[], max_selections=1)
+    engine_type = row2_col1.selectbox("Motortyp", options=[" "] + sorted(data["engine_type"].unique()), index=0)
     #Motorleistung
     horsepower = row2_col2.slider("Motorleistung (in PS)", min_value=int(data["horsepower"].min()), max_value=int(data["horsepower"].max()), step=10, value=int(data["horsepower"].median()))
     #Durchschnittlicher Verbrauch
@@ -199,36 +199,54 @@ with tab2:
     #Abfrage über jährlich gefahrene Kilometer
     km_jahrlich = row5_col2.slider("Wie viele Kilometer fährst du ungefähr jährlich", min_value=0, max_value=60000, value=15000)
     
+    #Berechnung zukünftiges Alter und Kilometerstand
+    age_verkauf = age + jahre
+    km_verkauf = mileage + (jahre * km_jahrlich)
     
+    #Alle User Inputs in ein DataFrame für spätere Vorhersage
+    auto_user = pd.DataFrame({"make_name": make_name, 
+                              "model_name": model_name, 
+                              "body_type": body_type, 
+                              "engine_type": engine_type,
+                              "horsepower": horsepower, 
+                              "average_fuel_economy": average_fuel_economy, 
+                              "fuel_type": fuel_type, 
+                              "wheel_system_display": wheel_system_display, 
+                              "manual": manual, 
+                              "age": age_verkauf, 
+                              "mileage": km_verkauf})
+    #Konvertierung Datentypen
+    auto_user = auto_user.astype({"make_name": "object", 
+                              "model_name": "object", 
+                              "body_type": "object", 
+                              "engine_type": "object",
+                              "horsepower": "int", 
+                              "average_fuel_economy": "float", 
+                              "fuel_type": "object", 
+                              "wheel_system_display": "object", 
+                              "manual": "int", 
+                              "age": "int", 
+                              "mileage": "float"})
+    
+    #Dummy-Variablen erstellen
+    auto_user = pd.get_dummies(auto_user, drop_first = True)
+    
+    #Alle Dummy-Spalten ergänzen und mit 0 füllen (vom User Input fehlen viele Dummy-Columns) #Code von ChatGPT erhalten und selber die Plausibilität nachvollzogen
+    missing_cols = set(data.columns) - set(auto_user.columns) #Über set die Columns in eine ungeordnete Menge bringen, dann die Spalten des ursprünglichen DataSet - Spalten des User-Input DataSet rechnen, um die Missing_Columns zu erhalten
+    for col in missing_cols: #Für jede Spalte in Missing_Columns wird im DataSet des Users eine 0 ergänzt
+        auto_user[col] = 0
+    auto_user = auto_user[data.columns.drop("price")] #Spaltenreihenfolge vom ursprünglichen Dataset übernehmen und Price aus dem ursprünglichen DataSet droppen (Vorhersagevariable)
+
+
     #Verkaufswert-Vorhersage
     st.subheader("Vorhersage für den Wiederverkaufswert deines Autos basierend auf deinen Angaben")
     
-    #Zusammenfassung der Eingaben
+    #Berechnung, sobald alle User Inputs eingegeben
+    if not auto_user.empty:
+        price = model.predict(auto_user) #Berechnung des Preises über Modell
+        
+        st.markdown(f"Der Wiederverkaufswert deines Autos liegt bei :red-background[{price[0]:,.2f} USD]**")
     
-    #Bestätigung
-    on = st.toggle("Ich bestätige hiermit, dass ich die Werte vollständig und korrekt erfasst habe")
-    
-    #Vorhersage
-    if on and st.button("Berechne Wiederverkaufswert"):
-        #Alle User Inputs in ein DataFrame für spätere Vorhersage
-        age_verkauf = age + jahre
-        km_verkauf = mileage + (jahre*km_jahrlich)
-        auto_user = pd.DataFrame({"make_name": make_name, 
-                                  "model_name": model_name, 
-                                  "body_type": body_type, 
-                                  "engine_type": engine_type,
-                                  "horsepower": horsepower, 
-                                  "average_fuel_economy": average_fuel_economy, 
-                                  "fuel_type": fuel_type, 
-                                  "wheel_system_display": wheel_system_display, 
-                                  "manual": manual, 
-                                  "age": age_verkauf, 
-                                  "mileage": km_verkauf})
-        
-        auto_user = pd.get_dummies(auto_user, drop_first = True) #Dummies erstellen
-        st.write(auto_user)
-        #price = model.predict(auto_user) #Berechnung des Modells
-        
-        #st.markdown(f"Der Wiederverkaufswert deines Autos liegt bei :red-background[{price[0]:, .2f} USD]**")
-        
+    else:
+        st.markdown("Bitte Werte vollständig ausfüllen")
 
