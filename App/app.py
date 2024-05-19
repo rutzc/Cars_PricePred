@@ -200,21 +200,6 @@ with tab2:
     km_jahrlich = row5_col2.slider("Wie viele Kilometer fährst du ungefähr jährlich", min_value=0, max_value=60000, value=15000)
     
     
-    #Alle User Inputs in ein DataFrame für spätere Vorhersage
-    age_verkauf = age + jahre
-    km_verkauf = mileage + (jahre*km_jahrlich)
-    auto_user = pd.DataFrame({"make_name": make_name, 
-                              "model_name": model_name, 
-                              "body_type": body_type, 
-                              "engine_type": engine_type,
-                              "horsepower": horsepower, 
-                              "average_fuel_economy": average_fuel_economy, 
-                              "fuel_type": fuel_type, 
-                              "wheel_system_display": wheel_system_display, 
-                              "manual": manual, 
-                              "age": age_verkauf, 
-                              "mileage": km_verkauf})
-    
     #Verkaufswert-Vorhersage
     st.subheader("Vorhersage für den Wiederverkaufswert deines Autos basierend auf deinen Angaben")
     
@@ -223,28 +208,28 @@ with tab2:
     #Bestätigung
     on = st.toggle("Ich bestätige hiermit, dass ich die Werte vollständig und korrekt erfasst habe")
     
-    #Button Berechnen
-    st.button("Berechnen", type="secondary")
-
-'''
-if on:
-    st.write("Feature activated!")
-    st.button("Berechnen", type="primary")
-    if st.button("Say hello"):
-    st.write("Why hello there")
-else:
-    st.write("Goodbye")
-    
-    #Berechnung, sobald alle User Inputs eingegeben wurden
-    if auto_user is not None:    
+    #Vorhersage
+    if on and st.button("Berechne Wiederverkaufswert"):
+        #Alle User Inputs in ein DataFrame für spätere Vorhersage
+        age_verkauf = age + jahre
+        km_verkauf = mileage + (jahre*km_jahrlich)
+        auto_user = pd.DataFrame({"make_name": make_name, 
+                                  "model_name": model_name, 
+                                  "body_type": body_type, 
+                                  "engine_type": engine_type,
+                                  "horsepower": horsepower, 
+                                  "average_fuel_economy": average_fuel_economy, 
+                                  "fuel_type": fuel_type, 
+                                  "wheel_system_display": wheel_system_display, 
+                                  "manual": manual, 
+                                  "age": age_verkauf, 
+                                  "mileage": km_verkauf})
+        
         auto_user = pd.get_dummies(auto_user, drop_first = True) #Dummies erstellen
         price = model.predict(auto_user) #Berechnung des Modells
-    
+        
         st.markdown(f"Der Wiederverkaufswert deines Autos liegt bei :red-background[{price} USD]")
-    
+        
     else:
         st.markdown("Bitte Werte vollständig ausfüllen")
-    
-
-'''
 
