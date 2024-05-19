@@ -207,7 +207,7 @@ with tab2:
     on = st.toggle("Ich bestätige hiermit, dass ich die Werte vollständig und korrekt erfasst habe")
     
     #Vorhersage
-    if on and st.button("Berechne Wiederverkaufswert", type="secondary"): 
+    if on and st.button("Berechne Wiederverkaufswert"): 
 
         #Berechnung zukünftiges Alter und Kilometerstand
         age_verkauf = age + jahre
@@ -256,20 +256,18 @@ with tab2:
             st.markdown(f"Der Wiederverkaufswert deines Autos liegt bei :red-background[**{price_formatted}** CHF]")
             
             #Anzeige eines Plots, der einem die Preise über die Zeit zeigt von heute bis in gewünschtes Verkaufsjahr + 10
-            show_plot = st.checkbox(f"Zeige mir die Entwicklung des Wiederverkaufswert ab heute bis in {jahre+10} Jahren")
-            if show_plot:
-                #Variablen initialisieren
-                jahre_plus10 = jahre + 10 #Gewünschtes Verkaufsjahr + 10
-                jahr_range = np.arange(0, jahre_plus10+1) #1+ wegen Range
-                prices = [] #Leere Liste, in die Preise hinzugefügt werden können
+            #Variablen initialisieren
+            jahre_plus10 = jahre + 10 #Gewünschtes Verkaufsjahr + 10
+            jahr_range = np.arange(0, jahre_plus10+1) #1+ wegen Range
+            prices = [] #Leere Liste, in die Preise hinzugefügt werden können
+    
+            #Für jedes Jahr DataFrame erstellen -> mittels Modell Preis-Vorhersage erstellen -> Preis zur Liste hinzufügen
+            for jahr in jahr_range: 
+                age_verkauf = age + jahr
+                km_verkauf = mileage + (jahr * km_jahrlich)
         
-                #Für jedes Jahr DataFrame erstellen -> mittels Modell Preis-Vorhersage erstellen -> Preis zur Liste hinzufügen
-                for jahr in jahr_range: 
-                    age_verkauf = age + jahr
-                    km_verkauf = mileage + (jahr * km_jahrlich)
-            
-                    #Alle User Inputs in ein DataFrame für spätere Vorhersage
-                    auto_user = pd.DataFrame({"make_name": [make_name], 
+                #Alle User Inputs in ein DataFrame für spätere Vorhersage
+                auto_user = pd.DataFrame({"make_name": [make_name], 
                                   "model_name": [model_name], 
                                   "body_type": [body_type], 
                                   "horsepower": [horsepower], 
@@ -279,39 +277,38 @@ with tab2:
                                   "manual": [manual], 
                                   "age": [age_verkauf], 
                                   "mileage": [km_verkauf]})
-                    #Konvertierung Datentypen
-                    auto_user = auto_user.astype({"make_name": "object", 
+                 #Konvertierung Datentypen
+                auto_user = auto_user.astype({"make_name": "object", 
                                   "model_name": "object", 
                                   "body_type": "object", 
                                   "horsepower": "int", 
-                                     "average_fuel_economy": "float", 
-                                     "fuel_type": "object", 
-                                     "wheel_system_display": "object", 
-                                     "manual": "int", 
-                                     "age": "int", 
-                                     "mileage": "float"})
+                                  "average_fuel_economy": "float", 
+                                  "fuel_type": "object", 
+                                  "wheel_system_display": "object", 
+                                  "manual": "int", 
+                                  "age": "int", 
+                                  "mileage": "float"})
             
-                    #Dummy-Variablen erstellen
-                    auto_user = pd.get_dummies(auto_user, drop_first = True)
+                #Dummy-Variablen erstellen
+                auto_user = pd.get_dummies(auto_user, drop_first = True)
         
-                    #Alle Dummy-Spalten ergänzen und mit 0 füllen 
-                    dummy_columns = pd.get_dummies(data.drop(columns=["price"]), drop_first = True).columns
-                    auto_user = auto_user.reindex(columns=dummy_columns, fill_value=0) 
+                #Alle Dummy-Spalten ergänzen und mit 0 füllen 
+                dummy_columns = pd.get_dummies(data.drop(columns=["price"]), drop_first = True).columns
+                auto_user = auto_user.reindex(columns=dummy_columns, fill_value=0) 
             
-                    #Preis zur Preisliste hinzufügen
-                    if not auto_user.empty:
-                        price = price = model.predict(auto_user)
-                        prices.append(price[0])
+                #Preis zur Preisliste hinzufügen
+                if not auto_user.empty:
+                    price = price = model.predict(auto_user)
+                    prices.append(price[0])
             
-                #Plot erstellen
-                st.divider()
-                fig, ax = plt.subplots()
-                ax.plot(jahr_range, prices, marker="o")
-                ax.set_title("Entwicklung Wiederverkaufswert")
-                ax.set_xlabel("Jahre ab heute")
-                ax.set_ylabel("Wiederverkaufswert (CHF)")
-                st.pyplot(fig, use_container_width=True)
-                st.divider()
+            #Plot erstellen
+            fig, ax = plt.subplots()
+            ax.plot(jahr_range, prices, marker="o")
+            ax.set_title("Entwicklung Wiederverkaufswert")
+            ax.set_xlabel("Jahre ab heute")
+            ax.set_ylabel("Wiederverkaufswert (CHF)")
+            st.pyplot(fig, use_container_width=True)
+            st.divider()
     
 
 
