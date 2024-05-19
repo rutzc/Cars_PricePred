@@ -246,8 +246,10 @@ with tab2:
         st.subheader("Vorhersage für den Wiederverkaufswert deines Autos basierend auf deinen Angaben")
     
         #Berechnung, sobald alle User Inputs eingegeben
+        usd_chf = 0.91 #USD-CHF-Kurs am 19.05.2024 für Annäherung an CHF-Preis des Autos
         if not auto_user.empty:
-            price = model.predict(auto_user) #Berechnung des Preises über Modell
-            st.markdown(f"Der Wiederverkaufswert deines Autos liegt bei :red-background[{price[0]:,.2f} USD]")
+            price_usd = model.predict(auto_user) #Berechnung des Preises über Modell
+            price_chf = price_usd * usd_chf
+            st.markdown(f"Der Wiederverkaufswert deines Autos liegt bei :red-background[{price_chf[0]:,.2f} CHF]")
     
 
