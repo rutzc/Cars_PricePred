@@ -195,7 +195,7 @@ with tab2:
     #Grid Row 5
     row5_col1, row5_col2 = st.columns([1,1])
     #Abfrage über Zeitpunkt des Wiederverkaufs
-    jahre = row5_col1.number_input("In wie vielen Jahren möchtest du dein Auto gerne verkaufen", min_value=0, value=0, step=1)
+    jahre = row5_col1.slider("In wie vielen Jahren möchtest du dein Auto gerne verkaufen", min_value=0, max_value=50, value=0, step=1)
     #Abfrage über jährlich gefahrene Kilometer
     km_jahrlich = row5_col2.slider("Wie viele Kilometer fährst du ungefähr jährlich", min_value=0, max_value=60000, value=15000)
     
@@ -228,7 +228,7 @@ with tab2:
         auto_user = pd.get_dummies(auto_user, drop_first = True) #Dummies erstellen
         price = model.predict(auto_user) #Berechnung des Modells
         
-        st.markdown(f"Der Wiederverkaufswert deines Autos liegt bei :red-background[{price} USD]")
+        st.markdown(f"Der Wiederverkaufswert deines Autos liegt bei :red-background[{price[0]:, .2f} USD]**")
         
     else:
         st.markdown("Bitte Werte vollständig ausfüllen")
