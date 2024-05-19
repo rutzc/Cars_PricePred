@@ -32,13 +32,13 @@ st.set_page_config(
 #Definition für das Laden der Daten
 @st.cache_data #https://docs.streamlit.io/develop/concepts/architecture/caching
 def load_data():
-    data = pd.read_csv("./App/df_clean.csv")
+    data = pd.read_csv("./App/clean_data.csv")
     return data
 
 #Definition für das Laden des Modells
 @st.cache(allow_output_mutation=True)
 def load_model():
-    filename = "./App/finalized_model_age.sav"
+    filename = "./App/model.sav"
     loaded_model = pickle.load(open(filename, "rb"))
     return(loaded_model)
 
@@ -84,7 +84,7 @@ with tab1:
     
     #Numerische und kategorielle Variablen trennen
     numeric_variables = ["age","average_fuel_economy", "horsepower", "mileage"]
-    categorical_variables = ["body_type", "engine_type", "fuel_type", "make_name", "model_name", "manual", "wheel_system_display"]
+    categorical_variables = ["body_type", "fuel_type", "make_name", "model_name", "manual", "wheel_system_display"]
     
     #Numerische Analyse
     if selected_variable in numeric_variables:
@@ -152,9 +152,9 @@ with tab2:
     
     #Anweisungen an den User
     st.markdown("Wir bitten dich deshalb, einige Angaben über die Daten deines Fahrzeuges zu machen. Zudem solltest du uns, für eine möglichst exakte Berechnung angeben, Informationen zu deinen Fahrgewohnheiten angeben und wie lange du das Auto noch fahren möchtest.")
+    st.divider()
     
     #Eingabewerte abfragen für das Training des Modells        
-    
     #Grid Row 1
     row1_col1, row1_col2, row1_col3 = st.columns([1,1,1])
     #Marke
@@ -163,15 +163,15 @@ with tab2:
     model_name = row1_col2.selectbox("Automodell", options=[" "] + sorted(data[data["make_name"]==make_name]["model_name"].unique()), index=0)                          
     #Karosserietyp
     body_type = row1_col3.selectbox("Karosserietyp", options=[" "] + sorted(data[data["model_name"]==model_name]["body_type"].unique()), index=0)
+    st.divider()
     
     #Grid Row 2
-    row2_col1, row2_col2, row2_col3 = st.columns([1,1,1])
-    #Motortyp
-    engine_type = row2_col1.selectbox("Motortyp", options=[" "] + sorted(data["engine_type"].unique()), index=0)
+    row2_col1, row2_col2 = st.columns([1,1])
     #Motorleistung
-    horsepower = row2_col2.slider("Motorleistung (in PS)", min_value=int(data["horsepower"].min()), max_value=int(data["horsepower"].max()), step=10, value=int(data["horsepower"].median()))
+    horsepower = row2_col1.slider("Motorleistung (in PS)", min_value=int(data["horsepower"].min()), max_value=int(data["horsepower"].max()), step=10, value=int(data["horsepower"].median()))
     #Durchschnittlicher Verbrauch
-    average_fuel_economy = row2_col3.slider("Durchschnittlicher Verbrauch (in km pro Liter)", min_value=float(data["average_fuel_economy"].min()), max_value=float(data["average_fuel_economy"].max()), step=float(1), value=float(data["average_fuel_economy"].median()))
+    average_fuel_economy = row2_col2.slider("Durchschnittlicher Verbrauch (in km pro Liter)", min_value=float(data["average_fuel_economy"].min()), max_value=float(data["average_fuel_economy"].max()), step=float(1), value=float(data["average_fuel_economy"].median()))
+    st.divider()
     
     #Grid Row 3
     row3_col1, row3_col2, row3_col3 = st.columns([1,1,1])
@@ -185,6 +185,7 @@ with tab2:
         manual = 1
     else:
         manual = 0
+    st.divider()
     
     #Grid Row 4
     row4_col1, row4_col2 = st.columns([1,1])
@@ -192,6 +193,7 @@ with tab2:
     age = row4_col1.slider("Alter des Fahrzeugs", min_value=int(data["age"].min()), max_value=int(data["age"].max()), step=1, value=0)
     #Kilometerstand
     mileage = row4_col2.number_input("Kilometerstand", value=None, placeholder="Gib eine Zahl ein...", step=100)
+    st.divider()
     
     #Grid Row 5
     row5_col1, row5_col2 = st.columns([1,1])
@@ -199,6 +201,7 @@ with tab2:
     jahre = row5_col1.slider("In wie vielen Jahren möchtest du dein Auto gerne verkaufen", min_value=0, max_value=50, value=0, step=1)
     #Abfrage über jährlich gefahrene Kilometer
     km_jahrlich = row5_col2.slider("Wie viele Kilometer fährst du ungefähr jährlich", min_value=0, max_value=60000, value=15000, step=1000)
+    st.divider()
     
     #Bestätigung
     on = st.toggle("Ich bestätige hiermit, dass ich die Werte vollständig und korrekt erfasst habe")
@@ -214,7 +217,6 @@ with tab2:
         auto_user = pd.DataFrame({"make_name": [make_name], 
                               "model_name": [model_name], 
                               "body_type": [body_type], 
-                              "engine_type": [engine_type],
                               "horsepower": [horsepower], 
                               "average_fuel_economy": [average_fuel_economy], 
                               "fuel_type": [fuel_type], 
@@ -226,7 +228,6 @@ with tab2:
         auto_user = auto_user.astype({"make_name": "object", 
                               "model_name": "object", 
                               "body_type": "object", 
-                              "engine_type": "object",
                               "horsepower": "int", 
                               "average_fuel_economy": "float", 
                               "fuel_type": "object", 
@@ -243,6 +244,7 @@ with tab2:
         auto_user = auto_user.reindex(columns=dummy_columns, fill_value=0) 
 
         #Verkaufswert-Vorhersage
+        st.divider()
         st.subheader("Vorhersage für den Wiederverkaufswert deines Autos basierend auf deinen Angaben")
     
         #Berechnung, sobald alle User Inputs eingegeben
@@ -252,5 +254,10 @@ with tab2:
             price_chf = price_usd * usd_chf
             price_formatted = f"{price_chf[0]:,.0f}".replace(",", "'") #Tiefkomma mit Hochkamma ersetzen
             st.markdown(f"Der Wiederverkaufswert deines Autos liegt bei :red-background[**{price_formatted}** CHF]")
+            st.divider()
+            
+            #Anzeige eines Plots, der einem die Preise über die Zeit zeigt
+        
+        
     
 
