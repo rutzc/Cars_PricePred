@@ -204,17 +204,17 @@ with tab2:
     km_verkauf = mileage + (jahre * km_jahrlich)
     
     #Alle User Inputs in ein DataFrame für spätere Vorhersage
-    auto_user = pd.DataFrame({"make_name": make_name, 
-                              "model_name": model_name, 
-                              "body_type": body_type, 
-                              "engine_type": engine_type,
-                              "horsepower": horsepower, 
-                              "average_fuel_economy": average_fuel_economy, 
-                              "fuel_type": fuel_type, 
-                              "wheel_system_display": wheel_system_display, 
-                              "manual": manual, 
-                              "age": age_verkauf, 
-                              "mileage": km_verkauf})
+    auto_user = pd.DataFrame({"make_name": [make_name], 
+                              "model_name": [model_name], 
+                              "body_type": [body_type], 
+                              "engine_type": [engine_type],
+                              "horsepower": [horsepower], 
+                              "average_fuel_economy": [average_fuel_economy], 
+                              "fuel_type": [fuel_type], 
+                              "wheel_system_display": [wheel_system_display], 
+                              "manual": [manual], 
+                              "age": [age_verkauf], 
+                              "mileage": [km_verkauf]})
     #Konvertierung Datentypen
     auto_user = auto_user.astype({"make_name": "object", 
                               "model_name": "object", 
