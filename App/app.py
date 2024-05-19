@@ -257,10 +257,10 @@ with tab2:
             
     #Anzeige eines Plots, der einem die Preise über die Zeit zeigt von heute bis in gewünschtes Verkaufsjahr + 10
     if st.button(f"Zeige mir die Entwicklung des Wiederverkaufswert ab heute bis in {jahre+10} Jahren"):
-        st.divider()
+        #Variablen initialisieren
         jahre_plus10 = jahre + 10 #Gewünschtes Verkaufsjahr + 10
         jahr_range = np.arange(0, jahre_plus10+1) #1+ wegen Range
-        prices = []
+        prices = [] #Leere Liste, in die Preise hinzugefügt werden können
         
         #Für jedes Jahr DataFrame erstellen -> mittels Modell Preis-Vorhersage erstellen -> Preis zur Liste hinzufügen
         for jahr in jahr_range: 
@@ -303,6 +303,7 @@ with tab2:
                 prices.append(price[0])
             
         #Plot erstellen
+        st.divider()
         fig, ax = plt.subplots()
         ax.plot(jahr_range, prices, marker="o")
         ax.set_title("Entwicklung Wiederverkaufswert")
