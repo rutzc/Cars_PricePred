@@ -36,7 +36,7 @@ def load_data():
     return data
 
 #Definition für das Laden des Modells
-@st.cache(allow_output_mutation=True)
+#@st.cache(allow_output_mutation=True)
 def load_model():
     filename = "./App/finalized_model_age.sav"
     loaded_model = pickle.load(open(filename, "rb"))
