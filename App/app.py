@@ -153,7 +153,7 @@ with tab2:
     body_type = st.multiselect("Karosserietyp", options=sorted(data["body_type"]).unique(), default=[], max_selections=1)
     
     #Motortyp
-    engine_type = st.selectbox("Motortyp", options=sorted(data["engine_type"]).unique(), default=[], max_selections=1)
+    engine_type = st.multiselect("Motortyp", options=sorted(data["engine_type"]).unique(), default=[], max_selections=1)
     
     #Motorleistung
     horsepower = st.slider("Motorleistung (in PS)", data["horsepower"].min(), data["horsepower"].max(), step=10, value=data["horsepower"].median())
