@@ -152,9 +152,9 @@ with tab2:
     
     #Anweisungen an den User
     st.markdown("Wir bitten dich deshalb, einige Angaben über die Daten deines Fahrzeuges zu machen. Zudem solltest du uns, für eine möglichst exakte Berechnung angeben, Informationen zu deinen Fahrgewohnheiten angeben und wie lange du das Auto noch fahren möchtest.")
+    st.divider()
     
     #Eingabewerte abfragen für das Training des Modells        
-    
     #Grid Row 1
     row1_col1, row1_col2, row1_col3 = st.columns([1,1,1])
     #Marke
@@ -163,6 +163,7 @@ with tab2:
     model_name = row1_col2.selectbox("Automodell", options=[" "] + sorted(data[data["make_name"]==make_name]["model_name"].unique()), index=0)                          
     #Karosserietyp
     body_type = row1_col3.selectbox("Karosserietyp", options=[" "] + sorted(data[data["model_name"]==model_name]["body_type"].unique()), index=0)
+    st.divider()
     
     #Grid Row 2
     row2_col1, row2_col2 = st.columns([1,1])
@@ -239,6 +240,7 @@ with tab2:
         auto_user = auto_user.reindex(columns=dummy_columns, fill_value=0) 
 
         #Verkaufswert-Vorhersage
+        st.divider()
         st.subheader("Vorhersage für den Wiederverkaufswert deines Autos basierend auf deinen Angaben")
     
         #Berechnung, sobald alle User Inputs eingegeben
@@ -248,5 +250,10 @@ with tab2:
             price_chf = price_usd * usd_chf
             price_formatted = f"{price_chf[0]:,.0f}".replace(",", "'") #Tiefkomma mit Hochkamma ersetzen
             st.markdown(f"Der Wiederverkaufswert deines Autos liegt bei :red-background[**{price_formatted}** CHF]")
+            st.divider()
+            
+            #Anzeige eines Plots, der einem die Preise über die Zeit zeigt
+        
+        
     
 
