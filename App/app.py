@@ -140,6 +140,7 @@ with tab1:
         col2.pyplot(fig4, use_container_width=True)
         
         
+        
 
 
 ###### Tab 2 - Rechner ######
