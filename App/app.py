@@ -302,7 +302,7 @@ with tab2:
                     prices.append(price[0])
             
             #Plot erstellen
-            fig, ax = plt.subplots(figsize=(10, 5))
+            fig, ax = plt.subplots(figsize=(8, 4))
             ax.plot(jahr_range, prices, marker="o")
             ax.set_title("Entwicklung Wiederverkaufswert")
             ax.set_xlabel("Jahre ab heute")
