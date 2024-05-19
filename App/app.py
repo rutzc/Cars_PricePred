@@ -38,7 +38,7 @@ def load_data():
 #Definition für das Laden des Modells
 @st.cache_data #https://docs.streamlit.io/develop/concepts/architecture/caching
 def load_model():
-    filename = "finalized_model_age.sav"
+    filename = "./App/finalized_model_age.sav"
     loaded_model = pickle.load(open(filename, "rb"))
     return(loaded_model)
 
