@@ -226,10 +226,9 @@ with tab2:
                                   "mileage": km_verkauf})
         
         auto_user = pd.get_dummies(auto_user, drop_first = True) #Dummies erstellen
-        price = model.predict(auto_user) #Berechnung des Modells
+        st.write(auto_user)
+        #price = model.predict(auto_user) #Berechnung des Modells
         
-        st.markdown(f"Der Wiederverkaufswert deines Autos liegt bei :red-background[{price[0]:, .2f} USD]**")
+        #st.markdown(f"Der Wiederverkaufswert deines Autos liegt bei :red-background[{price[0]:, .2f} USD]**")
         
-    else:
-        st.markdown("Bitte Werte vollständig ausfüllen")
 
