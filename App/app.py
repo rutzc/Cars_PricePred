@@ -12,6 +12,8 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import pickle
+
 
 
 ###### Config ######
@@ -24,17 +26,27 @@ st.set_page_config(
     )
 
 
-###### Definitionen ######
-@st.cache_data
+
+###### Definitionen der Load-Functions ######
+
+#Definition für das Laden der Daten
+@st.cache_data #https://docs.streamlit.io/develop/concepts/architecture/caching
 def load_data():
     data = pd.read_csv("./App/df_clean.csv")
     return data
 
+#Definition für das Laden des Modells
+@st.cache_data #https://docs.streamlit.io/develop/concepts/architecture/caching
+def load_model():
+    filename = "finalized_model_age.sav"
+    loaded_model = pickle.load(open(filename, "rb"))
+    return(loaded_model)
 
 
-###### Daten laden ######
+
+###### Daten und Modell laden ######
 data = load_data()
-
+model = load_model()
 
 
 ###### Sidebar ######
@@ -135,7 +147,7 @@ with tab1:
 with tab2:
     #Subheader
     st.header("Willkommen beim Auto Wiederverkaufswert-Rechner", divider = "red")
-    st.subheader("Mit dem Widerverkaufswert-Rechner erhälst du eine ungefähre Vorhersage für den Preis, den heute oder in x Jahren für den Verkauf deines Autos erhälst")
+    st.subheader("Mit dem Widerverkaufswert-Rechner erhälst du eine ungefähre Vorhersage für den Preis, den heute oder in der Zukunft für den Verkauf deines Autos erhälst")
     
     #Anweisungen an den User
     st.markdown("Wir bitten dich deshalb, einige Angaben über die Daten deines Fahrzeuges zu machen. Zudem solltest du uns, für eine möglichst exakte Berechnung angeben, Informationen zu deinen Fahrgewohnheiten angeben und wie lange du das Auto noch fahren möchtest.")
@@ -184,6 +196,10 @@ with tab2:
     km_jahrlich = row5_col2.slider("Wie viele Kilometer fährst du ungefähr jährlich", min_value=0, max_value=60000, value=15000)
     
     
+    st.subheader("Vorhersage für den Wiederverkaufswert deines Autos basierend auf deinen Angaben")
+    
+    
+
 
     
 
