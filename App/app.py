@@ -196,7 +196,7 @@ with tab2:
     km_jahrlich = row5_col2.slider("Wie viele Kilometer fährst du ungefähr jährlich", min_value=0, max_value=60000, value=15000)
     
     
-    st.subheader("Vorhersage für den Wiederverkaufswert deines Autos basierend auf deinen Angaben")
+    #st.subheader("Vorhersage für den Wiederverkaufswert deines Autos basierend auf deinen Angaben")
     
     
 
