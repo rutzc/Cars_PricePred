@@ -250,6 +250,7 @@ with tab2:
         if not auto_user.empty:
             price_usd = model.predict(auto_user) #Berechnung des Preises über Modell
             price_chf = price_usd * usd_chf
-            st.markdown(f"Der Wiederverkaufswert deines Autos liegt bei :red-background[{price_chf[0]} CHF]")
+            price_formatted = f"{price_chf[0]:,.0f}".replace(",", "'") #Tiefkomma mit Hochkamma ersetzen
+            st.markdown(f"Der Wiederverkaufswert deines Autos liegt bei :red-background[**{price_formatted}** CHF]")
     
 
