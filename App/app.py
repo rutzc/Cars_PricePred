@@ -190,14 +190,14 @@ with tab2:
     #Alter
     age = row4_col1.slider("Alter des Fahrzeugs", min_value=int(data["age"].min()), max_value=int(data["age"].max()), step=1, value=0)
     #Kilometerstand
-    mileage = row4_col2.number_input("Kilometerstand", value=None, placeholder="Gib eine Zahl ein (in km)...")
+    mileage = row4_col2.number_input("Kilometerstand", value=None, placeholder="Gib eine Zahl ein...", step=100)
     
     #Grid Row 5
     row5_col1, row5_col2 = st.columns([1,1])
     #Abfrage über Zeitpunkt des Wiederverkaufs
     jahre = row5_col1.slider("In wie vielen Jahren möchtest du dein Auto gerne verkaufen", min_value=0, max_value=50, value=0, step=1)
     #Abfrage über jährlich gefahrene Kilometer
-    km_jahrlich = row5_col2.slider("Wie viele Kilometer fährst du ungefähr jährlich", min_value=0, max_value=60000, value=15000)
+    km_jahrlich = row5_col2.slider("Wie viele Kilometer fährst du ungefähr jährlich", min_value=0, max_value=60000, value=15000, step=1000)
     
     #Bestätigung
     on = st.toggle("Ich bestätige hiermit, dass ich die Werte vollständig und korrekt erfasst habe")
@@ -247,7 +247,6 @@ with tab2:
         #Berechnung, sobald alle User Inputs eingegeben
         if not auto_user.empty:
             price = model.predict(auto_user) #Berechnung des Preises über Modell
-        
             st.markdown(f"Der Wiederverkaufswert deines Autos liegt bei :red-background[{price[0]:,.2f} USD]")
     
 
