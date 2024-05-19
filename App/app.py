@@ -156,7 +156,7 @@ with tab2:
     engine_type = st.multiselect("Motortyp", options=sorted(data["engine_type"].unique()), default=[], max_selections=1)
     
     #Motorleistung
-    horsepower = st.slider("Motorleistung (in PS)", float(data["horsepower"].min()), float(data["horsepower"].max()), step=10, value=float(data["horsepower"].median()))
+    horsepower = st.slider("Motorleistung (in PS)", min_value=int(data["horsepower"].min()), max_value=int(data["horsepower"].max()), step=10, value=float(data["horsepower"].median()))
     
     #Kraftstoffart
     fuel_type = st.radio("Kraftstoffart", options=sorted(data["fuel_type"]).unique())
