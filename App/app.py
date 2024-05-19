@@ -232,7 +232,8 @@ with tab2:
     auto_user = pd.get_dummies(auto_user, drop_first = True)
     
     #Alle Dummy-Spalten ergänzen und mit 0 füllen (vom User Input fehlen viele Dummy-Columns) #Code von ChatGPT erhalten und selber die Plausibilität nachvollzogen
-    missing_cols = set(data.columns) - set(auto_user.columns) #Über set die Columns in eine ungeordnete Menge bringen, dann die Spalten des ursprünglichen DataSet - Spalten des User-Input DataSet rechnen, um die Missing_Columns zu erhalten
+    data_dummies = pd.get_dummies(data, drop_first = True)
+    missing_cols = set(data_dummies.columns) - set(auto_user.columns) #Über set die Columns in eine ungeordnete Menge bringen, dann die Spalten des ursprünglichen DataSet - Spalten des User-Input DataSet rechnen, um die Missing_Columns zu erhalten
     for col in missing_cols: #Für jede Spalte in Missing_Columns wird im DataSet des Users eine 0 ergänzt
         auto_user[col] = 0
     auto_user = auto_user[data.columns.drop("price")] #Spaltenreihenfolge vom ursprünglichen Dataset übernehmen und Price aus dem ursprünglichen DataSet droppen (Vorhersagevariable)
