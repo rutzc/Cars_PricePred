@@ -171,6 +171,7 @@ with tab2:
     horsepower = row2_col1.slider("Motorleistung (in PS)", min_value=int(data["horsepower"].min()), max_value=int(data["horsepower"].max()), step=10, value=int(data["horsepower"].median()))
     #Durchschnittlicher Verbrauch
     average_fuel_economy = row2_col2.slider("Durchschnittlicher Verbrauch (in km pro Liter)", min_value=float(data["average_fuel_economy"].min()), max_value=float(data["average_fuel_economy"].max()), step=float(1), value=float(data["average_fuel_economy"].median()))
+    st.divider()
     
     #Grid Row 3
     row3_col1, row3_col2, row3_col3 = st.columns([1,1,1])
@@ -184,6 +185,7 @@ with tab2:
         manual = 1
     else:
         manual = 0
+    st.divider()
     
     #Grid Row 4
     row4_col1, row4_col2 = st.columns([1,1])
@@ -191,6 +193,7 @@ with tab2:
     age = row4_col1.slider("Alter des Fahrzeugs", min_value=int(data["age"].min()), max_value=int(data["age"].max()), step=1, value=0)
     #Kilometerstand
     mileage = row4_col2.number_input("Kilometerstand", value=None, placeholder="Gib eine Zahl ein...", step=100)
+    st.divider()
     
     #Grid Row 5
     row5_col1, row5_col2 = st.columns([1,1])
@@ -198,6 +201,7 @@ with tab2:
     jahre = row5_col1.slider("In wie vielen Jahren möchtest du dein Auto gerne verkaufen", min_value=0, max_value=50, value=0, step=1)
     #Abfrage über jährlich gefahrene Kilometer
     km_jahrlich = row5_col2.slider("Wie viele Kilometer fährst du ungefähr jährlich", min_value=0, max_value=60000, value=15000, step=1000)
+    st.divider()
     
     #Bestätigung
     on = st.toggle("Ich bestätige hiermit, dass ich die Werte vollständig und korrekt erfasst habe")
