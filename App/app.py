@@ -119,15 +119,15 @@ with tab1:
     #Alter
     age = row4_col1.slider("Alter des Fahrzeugs", min_value=int(data["age"].min()), max_value=int(data["age"].max()), step=1, value=0)
     #Kilometerstand
-    mileage = row4_col2.number_input("Kilometerstand", value=None, placeholder="Gib eine Zahl ein...", step=100) #Number Input mit Textfeld
+    mileage = row4_col2.number_input("Kilometerstand", value=None, placeholder="Gib eine Zahl ein...", step=1000) #Number Input mit Textfeld
     st.divider()
     
     #Grid Row 5 - Slider für Haltungsjahre und durchschnittliche km jährlich
     row5_col1, row5_col2 = st.columns([1,1])
     #Abfrage über Zeitpunkt des Wiederverkaufs
-    jahre = row5_col1.slider("In wie vielen Jahren möchtest du dein Auto gerne verkaufen", min_value=0, max_value=20, value=0, step=1) #nicht weiter als 20 Jahr in Zukunft
+    jahre = row5_col1.slider("In wie vielen Jahren möchtest du dein Auto gerne verkaufen?", min_value=0, max_value=10, value=0, step=1) #nicht weiter als 20 Jahr in Zukunft
     #Abfrage über jährlich gefahrene Kilometer
-    km_jahrlich = row5_col2.slider("Wie viele Kilometer fährst du ungefähr jährlich", min_value=0, max_value=60000, value=15000, step=1000)
+    km_jahrlich = row5_col2.slider("Wie viele Kilometer fährst du ungefähr jährlich?", min_value=0, max_value=60000, value=15000, step=1000)
     st.divider()
     
     
