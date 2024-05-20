@@ -198,7 +198,7 @@ with tab1:
             #Berechnung
             usd_chf = 0.91 #USD-CHF-Kurs am 19.05.2024 für Annäherung an CHF-Preis des Autos (Quelle: https://www.finanzen.ch/devisen/dollarkurs)
             if not user_input.empty:
-                price_usd = model.predict(user_input) #Berechnung des künftigen Preises über Modell
+                price_usd = model.predict(user_input_updates) #Berechnung des künftigen Preises über Modell
                 price_chf = price_usd * usd_chf #in CHF umrechnen
                 price_formatted = f"{price_chf[0]:,.0f}".replace(",", "'") #Tiefkomma mit Hochkamma ersetzen
                 st.markdown(f"Der Wiederverkaufswert deines Autos in {jahre} Jahren liegt bei :red-background[**{price_formatted}** CHF]") #Ausgabe mit optischer Hervorhebugn des Preises
