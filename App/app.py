@@ -249,7 +249,7 @@ with tab1:
                     #Preis zur Preisliste hinzufügen
                     if not auto_user.empty:
                         price = model.predict(auto_user)
-                        price = price 
+                        price = price * usd_chf
                         prices.append(price[0]) #Preis zu Liste hinzufügen über append Funktion (Quelle: https://pandas.pydata.org/pandas-docs/version/1.3/reference/api/pandas.DataFrame.append.html)
                 
                 #Plot erstellen mit Jahren und Preisen
