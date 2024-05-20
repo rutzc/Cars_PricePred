@@ -339,8 +339,7 @@ with tab2:
         fig3, ax3 = plt.subplots(figsize=(8,3.7))
         data_price_chf = data["price"] * usd_chf #Preis in CHF
         avg_price_by_category = data_price_chf.groupby(selected_variable)["price"].mean().reset_index() 
-        sorted_cateogries = sorted(avg_price_by_category[selected_variable].unique())
-        sns.barplot(x=selected_variable, y="price", data=avg_price_by_category, ax=ax3, palette="Set2", order=sorted_cateogries)
+        sns.barplot(x=sorted(selected_variable), y="price", data=avg_price_by_category, ax=ax3, palette="Set2")
         plt.xticks(rotation=90)
         ax3.set_xlabel(selected_variable)
         ax3.set_ylabel("Durchschnittlicher Preis (CHF)")
@@ -350,8 +349,7 @@ with tab2:
         col2.write(f"Boxplot von {selected_variable} und Preis")
         fig4, ax4 = plt.subplots(figsize=(8, 3.7))
         data_price_chf = data["price"] * usd_chf
-        sorted_cateogries = sorted(data_price_chf[selected_variable].unique())
-        sns.boxplot(x=selected_variable, y="price", data=data_price_chf, ax=ax4, palette="Set2", order=sorted_cateogries)
+        sns.boxplot(x=selected_variable, y="price", data=data_price_chf, ax=ax4, palette="Set2")
         plt.xticks(rotation=90)
         ax4.set_xlabel(selected_variable)
         ax4.set_ylabel("Preis (CHF)")
