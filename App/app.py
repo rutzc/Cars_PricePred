@@ -254,6 +254,10 @@ with tab2:
         dummy_columns = pd.get_dummies(data.drop(columns=["price"]), drop_first = True).columns
         user_input = user_input.reindex(columns=dummy_columns, fill_value=0) 
 
+        #Verkaufswert-Vorhersage
+        st.divider()
+        st.subheader("Vorhersage für den aktuellen deines Autos basierend auf deinen Angaben")        
+
         #Preis-Vorhersage(heute), sobald alle User Inputs eingegeben
         usd_chf = 0.91 #USD-CHF-Kurs am 19.05.2024 für Annäherung an CHF-Preis des Autos
         if not user_input.empty:
