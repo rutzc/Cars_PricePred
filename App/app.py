@@ -256,8 +256,7 @@ with tab2:
 
         #Verkaufswert-Vorhersage
         st.divider()
-        st.subheader("Vorhersage für den aktuellen deines Autos basierend auf deinen Angaben")
-        st.markdown ("")        
+        st.subheader("Vorhersage für den aktuellen deines Autos basierend auf deinen Angaben")      
 
         #Preis-Vorhersage(heute), sobald alle User Inputs eingegeben
         usd_chf = 0.91 #USD-CHF-Kurs am 19.05.2024 für Annäherung an CHF-Preis des Autos
@@ -266,6 +265,7 @@ with tab2:
             price_now_chf = price_now_usd * usd_chf
             price_now_formatted = f"{price_now_chf[0]:,.0f}".replace(",", "'") #Tiefkomma mit Hochkamma ersetzen
             st.markdown(f"Der aktuelle Preis für dein Auto liegt bei :red-background[**{price_now_formatted}** CHF]")
+            st.markdown(" ") #Zeilenumbruch 
     
         #Vorhersage in x Jahren
         if st.button("Berechne Wiederverkaufswert"): 
