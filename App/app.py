@@ -95,7 +95,7 @@ with tab1:
     #Grid Row 2 - Slider für Motorleistung und durchschnittl. Verbrauch
     row2_col1, row2_col2 = st.columns([1,1])
     #Motorleistung
-    horsepower = row2_col1.slider("Motorleistung (in PS)", min_value=int(data["horsepower"].min()), max_value=int(data["horsepower"].max()), step=1, value=int(data[data["model_name"]==model_name]["horsepower"].median())) #Min, Max basierend auf den Werten aus dem Dataset, für Default = Median aus den Daten für dieses Modell
+    horsepower = row2_col1.slider("Motorleistung (in PS)", min_value=int(data["horsepower"].min()), max_value=int(data["horsepower"].max()), step=10, value=int(data[data["model_name"]==model_name]["horsepower"].median())) #Min, Max basierend auf den Werten aus dem Dataset, für Default = Median aus den Daten für dieses Modell
     #Durchschnittlicher Verbrauch
     average_fuel_economy = row2_col2.slider("Durchschnittlicher Verbrauch (in km pro Liter)", min_value=float(data["average_fuel_economy"].min()), max_value=float(data["average_fuel_economy"].max()), step=float(1), value=float(data[data["model_name"]==model_name]["average_fuel_economy"].median()))
     st.divider()
