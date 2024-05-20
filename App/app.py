@@ -316,7 +316,8 @@ with tab2:
         #Scatterplot mit Preis
         #Scatterplot lädt sehr lange, deshalb nur mit einem Sample der Daten
         sample_data = data.sample(frac=0.3)
-        preis_chf = sample_data["price"] * usd_chf
+        usd_chf = 0.91 #USD-CHF-Kurs am 19.05.2024 für Annäherung an CHF-Preis des Autos (Quelle: https://www.finanzen.ch/devisen/dollarkurs)
+        preis_chf = sample_data["price"] * usd_chf #Preise in CHF umrechnen
         col2.write(f"Scatterplot Preis vs. {selected_variable} (n = {len(sample_data)})")
         fig2, ax2 = plt.subplots(figsize=(8, 3.7))
         sns.regplot(x=selected_variable, y=preis_chf, data=sample_data, ax=ax2, scatter_kws={'color': '#66c2a5'}, line_kws={'color': '#fc8d62'})
