@@ -256,7 +256,8 @@ with tab2:
 
         #Verkaufswert-Vorhersage
         st.divider()
-        st.subheader("Vorhersage für den aktuellen deines Autos basierend auf deinen Angaben")        
+        st.subheader("Vorhersage für den aktuellen deines Autos basierend auf deinen Angaben")
+        st.markdown ("")        
 
         #Preis-Vorhersage(heute), sobald alle User Inputs eingegeben
         usd_chf = 0.91 #USD-CHF-Kurs am 19.05.2024 für Annäherung an CHF-Preis des Autos
@@ -287,7 +288,7 @@ with tab2:
                 price_usd = model.predict(user_input) #Berechnung des Preises über Modell
                 price_chf = price_usd * usd_chf
                 price_formatted = f"{price_chf[0]:,.0f}".replace(",", "'") #Tiefkomma mit Hochkamma ersetzen
-                st.markdown(f"Der Wiederverkaufswert deines Autos in {jahre} liegt bei :red-background[**{price_formatted}** CHF]")
+                st.markdown(f"Der Wiederverkaufswert deines Autos in {jahre} Jahren liegt bei :red-background[**{price_formatted}** CHF]")
                 
                 
                 #Anzeige eines Plots, der einem die Preise über die Zeit zeigt von heute bis in gewünschtes Verkaufsjahr + 5
