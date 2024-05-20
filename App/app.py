@@ -83,30 +83,25 @@ with tab1:
                       "horsepower": "Motorleistung (PS)", 
                       "make_name": "Automarke",
                       "mileage": "Kilometerstand",
-                      "model_name": "Automodell",
+                      #"model_name": "Automodell", #Weglassen wegen Darstellungsproblemen beim Plot (zu viele unique-values)
                       "manual": "Getriebeart",
                       "wheel_system_display": "Antriebssystem"}
     #Reverse Dictionary, um von Auswahl auf die ursprüngliche Variable zu schliessen
     reverse_variable_names = {v: k for k, v in variable_names.items()}
     #Dorpdown für Auswahl
     selected_variable = st.selectbox("Wähle eine Variable", list(sorted(variable_names.values())))
-    #Auswahl im reverse dict.
+    #Auswahl im reverse dict
     selected_variable =reverse_variable_names[selected_variable]
-    
-    #Tickbox für Anzeige Raw Data
-    if st.checkbox("Rohdatensatz anzeigen", False):
-        st.subheader("Rohdaten")
-        st.write(data)
     
     #Numerische und kategorielle Variablen trennen
     numeric_variables = ["age","average_fuel_economy", "horsepower", "mileage"]
-    categorical_variables = ["body_type", "fuel_type", "make_name", "model_name", "manual", "wheel_system_display"]
+    categorical_variables = ["body_type", "fuel_type", "make_name", "manual", "wheel_system_display"]
     
     #Numerische Analyse
     if selected_variable in numeric_variables:
         
         #Titel
-        st.subheader(f"Analyse numerischer Variable {selected_variable} (N = {len(data)}")
+        st.subheader(f"Analyse numerischer Variable {selected_variable} (N = {len(data)})")
         
         #Zwei Spalten
         col1, col2 = st.columns([1, 1])
@@ -122,7 +117,7 @@ with tab1:
         #Scatterplot mit Preis
         #Scatterplot lädt sehr lange, deshalb nur mit einem Sample der Daten
         sample_data = data.sample(frac=0.3)
-        col2.write(f"Scatterplot Preis vs. {selected_variable} (n = {len(sample_data)}")
+        col2.write(f"Scatterplot Preis vs. {selected_variable} (n = {len(sample_data)})")
         fig2, ax2 = plt.subplots(figsize=(8, 3.7))
         sns.regplot(x=selected_variable, y="price", data=sample_data, ax=ax2, scatter_kws={'color': '#66c2a5'}, line_kws={'color': '#fc8d62'})
         ax2.set_xlabel(selected_variable)
@@ -133,7 +128,7 @@ with tab1:
     elif selected_variable in categorical_variables:
         
         #Titel
-        st.subheader(f"Analyse kategorischer Variable {selected_variable}")
+        st.subheader(f"Analyse kategorischer Variable {selected_variable} (N = {len(data)})")
         
         #Zwei Spalten
         col1, col2 = st.columns([1, 1])
@@ -157,7 +152,10 @@ with tab1:
         ax4.set_ylabel("Preis")
         col2.pyplot(fig4, use_container_width=True)
         
-        
+    #Tickbox für Anzeige Raw Data
+    if st.checkbox("Rohdatensatz anzeigen", False):
+        st.subheader("Rohdaten")
+        st.write(data)
         
 
 
