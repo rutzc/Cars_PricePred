@@ -104,9 +104,11 @@ with tab1:
         col1.pyplot(fig1, use_container_width=True)
         
         #Scatterplot mit Preis
+        #Scatterplot lädt sehr lange, deshalb nur mit einem Sample der Daten
+        sample_data = data.sample(frac=0.5)
         col2.write(f"Scatterplot Preis vs. {selected_variable}")
         fig2, ax2 = plt.subplots(figsize=(8, 3.7))
-        sns.regplot(x=selected_variable, y="price", data=data, ax=ax2, scatter_kws={'color': '#66c2a5'}, line_kws={'color': '#fc8d62'})
+        sns.regplot(x=selected_variable, y="price", data=sample_data, ax=ax2, scatter_kws={'color': '#66c2a5'}, line_kws={'color': '#fc8d62'})
         ax2.set_xlabel(selected_variable)
         ax2.set_ylabel("Preis")
         col2.pyplot(fig2, use_container_width=True)
@@ -255,10 +257,10 @@ with tab2:
             price_formatted = f"{price_chf[0]:,.0f}".replace(",", "'") #Tiefkomma mit Hochkamma ersetzen
             st.markdown(f"Der Wiederverkaufswert deines Autos liegt bei :red-background[**{price_formatted}** CHF]")
             
-            #Anzeige eines Plots, der einem die Preise über die Zeit zeigt von heute bis in gewünschtes Verkaufsjahr + 10
+            #Anzeige eines Plots, der einem die Preise über die Zeit zeigt von heute bis in gewünschtes Verkaufsjahr + 5
             #Variablen initialisieren
-            jahre_plus10 = jahre + 10 #Gewünschtes Verkaufsjahr + 10
-            jahr_range = np.arange(0, jahre_plus10+1) #1+ wegen Range
+            jahre_plus = jahre + 5 #Gewünschtes Verkaufsjahr + 10
+            jahr_range = np.arange(0, jahre_plus+1) #1+ wegen Range
             prices = [] #Leere Liste, in die Preise hinzugefügt werden können
     
             #Für jedes Jahr DataFrame erstellen -> mittels Modell Preis-Vorhersage erstellen -> Preis zur Liste hinzufügen
