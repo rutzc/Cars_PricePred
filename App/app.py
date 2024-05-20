@@ -316,7 +316,7 @@ with tab2:
         #Scatterplot mit Preis
         #Scatterplot lädt sehr lange, deshalb nur mit einem Sample der Daten
         sample_data = data.sample(frac=0.3)
-        preis_chf = sample_data["pride"] * usd_chf
+        preis_chf = sample_data["price"] * usd_chf
         col2.write(f"Scatterplot Preis vs. {selected_variable} (n = {len(sample_data)})")
         fig2, ax2 = plt.subplots(figsize=(8, 3.7))
         sns.regplot(x=selected_variable, y=preis_chf, data=sample_data, ax=ax2, scatter_kws={'color': '#66c2a5'}, line_kws={'color': '#fc8d62'})
