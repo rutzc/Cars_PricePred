@@ -291,6 +291,8 @@ with tab2:
     numeric_variables = ["age","average_fuel_economy", "horsepower", "mileage"]
     categorical_variables = ["body_type", "fuel_type", "make_name", "manual", "wheel_system_display"]
     
+    #Divider für besser Darstellung
+    st.divider()
     
     #Numerische Analyse, wenn die ausgewählte Variable in der Liste für numerische Variablen ist
     if selected_variable in numeric_variables:
