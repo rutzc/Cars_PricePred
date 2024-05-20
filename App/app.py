@@ -291,8 +291,15 @@ with tab2:
     numeric_variables = ["age","average_fuel_economy", "horsepower", "mileage"]
     categorical_variables = ["body_type", "fuel_type", "make_name", "manual", "wheel_system_display"]
     
+            
+    #Tickbox für Anzeige Raw Data
+    if st.checkbox("Rohdatensatz anzeigen", False):
+        st.subheader("Rohdaten")
+        st.write(data)
+    
     #Divider für besser Darstellung
     st.divider()
+    
     
     #Numerische Analyse, wenn die ausgewählte Variable in der Liste für numerische Variablen ist
     if selected_variable in numeric_variables:
@@ -349,11 +356,7 @@ with tab2:
         ax4.set_xlabel(selected_variable)
         ax4.set_ylabel("Preis")
         col2.pyplot(fig4, use_container_width=True)
-        
-    #Tickbox für Anzeige Raw Data
-    if st.checkbox("Rohdatensatz anzeigen", False):
-        st.subheader("Rohdaten")
-        st.write(data)
+
         
 
 
