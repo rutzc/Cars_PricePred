@@ -268,25 +268,11 @@ with tab2:
             age_verkauf = age + jahre
             km_verkauf = mileage + (jahre * km_jahrlich)
         
-            #User Inputs in ein DataFrame für spätere Vorhersage, dafür Dictionary von vorher bzgl. age und mileage updaten
-            user_input_updates = {"age": [age_verkauf], 
-                                  "mileage": [km_verkauf]}
-            #Konvertierung Datentypen
-            user_input_updates = user_input_updates.astype({
-                                  "age": "int", 
-                                  "mileage": "float"})
-            for key, value in user_input_updates.items():
-                if key in user_input:
-                    user_input[key] = value
-            
-            
-            #Dummy-Variablen erstellen
-            user_input = pd.get_dummies(user_input, drop_first = True)
-        
-            #Alle Dummy-Spalten ergänzen und mit 0 füllen 
-            dummy_columns = pd.get_dummies(data.drop(columns=["price"]), drop_first = True).columns
-            user_input = user_input.reindex(columns=dummy_columns, fill_value=0) 
-    
+            #User Inputs in ein DataFrame für spätere Vorhersage, dafür DataFrame updaten
+            user_input_updates = user_input.copy()
+            user_input_updates["age"] = age_verkauf
+            user_input_updates["mileage"] = km_verkauf
+
             #Verkaufswert-Vorhersage
             st.divider()
             st.subheader("Vorhersage für den Wiederverkaufswert deines Autos basierend auf deinen Angaben")
@@ -298,7 +284,6 @@ with tab2:
                 price_chf = price_usd * usd_chf
                 price_formatted = f"{price_chf[0]:,.0f}".replace(",", "'") #Tiefkomma mit Hochkamma ersetzen
                 st.markdown(f"Der Wiederverkaufswert deines Autos in {jahre} liegt bei :red-background[**{price_formatted}** CHF]")
-                
                 
                 
                 #Anzeige eines Plots, der einem die Preise über die Zeit zeigt von heute bis in gewünschtes Verkaufsjahr + 5
