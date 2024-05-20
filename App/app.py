@@ -294,7 +294,7 @@ with tab2:
     
     #Divider für besser Darstellung
     st.divider()
-    
+    usd_chf = 0.91 #USD-CHF-Kurs am 19.05.2024 für Annäherung an CHF-Preis des Autos (Quelle: https://www.finanzen.ch/devisen/dollarkurs)
     
     #Numerische Analyse, wenn die ausgewählte Variable in der Liste für numerische Variablen ist
     if selected_variable in numeric_variables:
@@ -316,7 +316,6 @@ with tab2:
         #Scatterplot mit Preis
         #Scatterplot lädt sehr lange, deshalb nur mit einem Sample der Daten
         sample_data = data.sample(frac=0.3)
-        usd_chf = 0.91 #USD-CHF-Kurs am 19.05.2024 für Annäherung an CHF-Preis des Autos (Quelle: https://www.finanzen.ch/devisen/dollarkurs)
         preis_chf = sample_data["price"] * usd_chf #Preise in CHF umrechnen
         col2.write(f"Scatterplot Preis vs. {selected_variable} (n = {len(sample_data)})")
         fig2, ax2 = plt.subplots(figsize=(8, 3.7))
@@ -338,20 +337,24 @@ with tab2:
         #Barplot
         col1.write(f"Barplot von {selected_variable} und Preis")
         fig3, ax3 = plt.subplots(figsize=(8,3.7))
-        avg_price_by_category = data.groupby(selected_variable)["price"].mean().reset_index()        
-        sns.barplot(x=selected_variable, y="price", data=avg_price_by_category, ax=ax3, palette="Set2")
+        data_price_chf = data["price"] * usd_chf #Preis in CHF
+        avg_price_by_category = data_price_chf.groupby(selected_variable)["price"].mean().reset_index() 
+        sorted_cateogries = sorted(avg_price_by_category[selected_variable].unique())
+        sns.barplot(x=selected_variable, y="price", data=avg_price_by_category, ax=ax3, palette="Set2", order=sorted_cateogries)
         plt.xticks(rotation=90)
         ax3.set_xlabel(selected_variable)
-        ax3.set_ylabel("Durchschnittlicher Preis")
+        ax3.set_ylabel("Durchschnittlicher Preis (CHF)")
         col1.pyplot(fig3, use_container_width=True)
         
         #Boxplot
         col2.write(f"Boxplot von {selected_variable} und Preis")
         fig4, ax4 = plt.subplots(figsize=(8, 3.7))
-        sns.boxplot(x=selected_variable, y="price", data=data, ax=ax4, palette="Set2")
+        data_price_chf = data["price"] * usd_chf
+        sorted_cateogries = sorted(data_price_chf[selected_variable].unique())
+        sns.boxplot(x=selected_variable, y="price", data=data_price_chf, ax=ax4, palette="Set2", order=sorted_cateogries)
         plt.xticks(rotation=90)
         ax4.set_xlabel(selected_variable)
-        ax4.set_ylabel("Preis")
+        ax4.set_ylabel("Preis (CHF)")
         col2.pyplot(fig4, use_container_width=True)
 
         
