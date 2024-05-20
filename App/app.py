@@ -89,7 +89,7 @@ with tab1:
     #Reverse Dictionary, um von Auswahl auf die ursprüngliche Variable zu schliessen
     reverse_variable_names = {v: k for k, v in variable_names.items()}
     #Dorpdown für Auswahl
-    selected_variable = st.selectbox("Wähle eine Variable", list(variable_names.values()))
+    selected_variable = st.selectbox("Wähle eine Variable", list(sorted(variable_names.values())))
     #Auswahl im reverse dict.
     selected_variable =reverse_variable_names[selected_variable]
     
