@@ -338,7 +338,7 @@ with tab2:
         col1.write(f"Barplot von {selected_variable} und Preis")
         fig3, ax3 = plt.subplots(figsize=(8,3.7))
         data_price_chf = data["price"] * usd_chf #in CHF umwandeln
-        avg_price_by_category = groupby(selected_variable)["price"].mean().reset_index()   
+        avg_price_by_category = data_price_chf.groupby(selected_variable)["price"].mean().reset_index()
         sns.barplot(x=selected_variable, y="price", data=avg_price_by_category, ax=ax3, palette="Set2")
         plt.xticks(rotation=90)
         ax3.set_xlabel(selected_variable)
