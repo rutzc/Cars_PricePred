@@ -291,12 +291,6 @@ with tab2:
     numeric_variables = ["age","average_fuel_economy", "horsepower", "mileage"]
     categorical_variables = ["body_type", "fuel_type", "make_name", "manual", "wheel_system_display"]
     
-            
-    #Tickbox für Anzeige Raw Data
-    if st.checkbox("Rohdatensatz anzeigen", False):
-        st.subheader("Rohdaten")
-        st.write(data)
-    
     #Divider für besser Darstellung
     st.divider()
     
@@ -358,6 +352,11 @@ with tab2:
         col2.pyplot(fig4, use_container_width=True)
 
         
-
+            
+    #Tickbox für Anzeige Raw Data
+    if st.checkbox("Rohdatensatz anzeigen", False):
+        st.subheader("Rohdaten")
+        st.write(data)
+    
 
 
