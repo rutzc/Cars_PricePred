@@ -334,7 +334,7 @@ with tab2:
         #Zwei Spalten
         col1, col2 = st.columns([1, 1])
         
-        #Sortierte Kategorien
+        #Sortierte Kategorien für X-Achse beider Plots
         sorted_categories = data.groupby(selected_variable)["price"].mean().sort_values().index
         
         #Barplot
