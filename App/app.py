@@ -339,8 +339,8 @@ with tab2:
         fig3, ax3 = plt.subplots(figsize=(8,3.7))
         data_price_chf = data.copy()
         data_price_chf["price"] = data["price"] * usd_chf #in CHF umwandeln
-        avg_price_by_category = data_price_chf.groupby(selected_variable)["price"].mean().sort_values().reset_index()
-        sns.barplot(x=selected_variable, y="price", data=avg_price_by_category, ax=ax3, palette="Set2")
+        avg_price_by_category_sorted = data_price_chf.groupby(selected_variable)["price"].mean().sort_values().reset_index()
+        sns.barplot(x=selected_variable, y="price", data=avg_price_by_category_sorted, ax=ax3, palette="Set2", order=avg_price_by_category_sorted)
         plt.xticks(rotation=90)
         ax3.set_xlabel(selected_variable)
         ax3.set_ylabel("Durchschnittlicher Preis (CHF)")
@@ -351,7 +351,7 @@ with tab2:
         fig4, ax4 = plt.subplots(figsize=(8, 3.7))
         data_price_chf = data.copy()
         data_price_chf["price"] = data["price"] * usd_chf #in CHF umwandeln
-        sns.boxplot(x=selected_variable, y="price", data=data_price_chf, ax=ax4, palette="Set2")
+        sns.boxplot(x=selected_variable, y="price", data=data_price_chf, ax=ax4, palette="Set2", order=avg_price_by_category_sorted)
         plt.xticks(rotation=90)
         ax4.set_xlabel(selected_variable)
         ax4.set_ylabel("Preis (CHF)")
