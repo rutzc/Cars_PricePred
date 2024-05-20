@@ -30,7 +30,7 @@ st.set_page_config(
 ###### Definitionen der Load-Functions ######
 
 #Definition für das Laden der Daten
-@st.cache_data #https://docs.streamlit.io/develop/concepts/architecture/caching
+@st.cache(allow_output_mutation=True)#https://docs.streamlit.io/develop/concepts/architecture/caching
 def load_data():
     data = pd.read_csv("./App/clean_data.csv")
     return data
