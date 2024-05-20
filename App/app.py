@@ -169,7 +169,7 @@ with tab1:
 
         #Titel Preis-Vorhersage (heute)
         st.divider()
-        st.subheader("Vorhersage für den aktuellen deines Autos basierend auf deinen Angaben")      
+        st.subheader("Vorhersage für den aktuellen Preis deines Autos basierend auf deinen Angaben")      
 
         #Preis-Vorhersage (heute), sobald alle User Inputs eingegeben
         usd_chf = 0.91 #USD-CHF-Kurs am 19.05.2024 für Annäherung an CHF-Preis des Autos (Quelle: https://www.finanzen.ch/devisen/dollarkurs)
@@ -248,7 +248,8 @@ with tab1:
                 
                     #Preis zur Preisliste hinzufügen
                     if not auto_user.empty:
-                        price = price = model.predict(auto_user)
+                        price = model.predict(auto_user)
+                        price = price * usd_chf
                         prices.append(price[0]) #Preis zu Liste hinzufügen über append Funktion (Quelle: https://pandas.pydata.org/pandas-docs/version/1.3/reference/api/pandas.DataFrame.append.html)
                 
                 #Plot erstellen mit Jahren und Preisen
