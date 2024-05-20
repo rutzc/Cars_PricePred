@@ -122,6 +122,7 @@ with tab1:
         sns.regplot(x=selected_variable, y="price", data=sample_data, ax=ax2, scatter_kws={'color': '#66c2a5'}, line_kws={'color': '#fc8d62'})
         ax2.set_xlabel(selected_variable)
         ax2.set_ylabel("Preis")
+        ax2.set_ylim(bottom=0) #damit bei Einblenden der Trendline keine negativen Preise angezeigt werden
         col2.pyplot(fig2, use_container_width=True)
         
     #Kategorische Analyse
