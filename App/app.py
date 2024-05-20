@@ -103,9 +103,9 @@ with tab1:
     #Grid Row 3
     row3_col1, row3_col2, row3_col3 = st.columns([1,1,1])
     #Kraftstoffart
-    fuel_type = row3_col1.radio("Kraftstoffart", options=data[data["model_name"]==model_name]["fuel_type"].unique()) #Filter basierend auf Modell
+    fuel_type = row3_col1.radio("Kraftstoffart", options=data["fuel_type"].unique()) 
     #Antriebssystem
-    wheel_system_display = row3_col2.radio("Antriebssystem", options=sorted(data[data["model_name"]==model_name]["wheel_system_display"].unique())) #Filter basierend auf Modell
+    wheel_system_display = row3_col2.radio("Antriebssystem", options=sorted(data["wheel_system_display"].unique())) 
     #Manuell oder automatisch
     manual = row3_col3.radio("Schaltgetriebe oder Automatikgetriebe", options=["Schaltung", "Automatik"]) #Optionen Schaltung und Automatik, nicht 1, 0
     if manual == "Schaltung": #je nach Auswahl, Wert von manual auf 0 oder 1
@@ -249,7 +249,7 @@ with tab1:
                     #Preis zur Preisliste hinzufügen
                     if not auto_user.empty:
                         price = model.predict(auto_user)
-                        price = price * usd_chf
+                        price = price 
                         prices.append(price[0]) #Preis zu Liste hinzufügen über append Funktion (Quelle: https://pandas.pydata.org/pandas-docs/version/1.3/reference/api/pandas.DataFrame.append.html)
                 
                 #Plot erstellen mit Jahren und Preisen
