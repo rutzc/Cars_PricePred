@@ -75,7 +75,7 @@ tab1, tab2 = st.tabs(["Wiederverkaufswert-Rechner", "Explorative Datenanalyse"])
 with tab1:
     #Subheader
     st.header("Willkommen beim Auto Wiederverkaufswert-Rechner", divider = "red")
-    st.subheader("Mit dem Widerverkaufswert-Rechner erhälst du eine ungefähre Vorhersage für den Preis, den heute oder in der Zukunft für den Verkauf deines Autos erhälst")
+    st.subheader("Mit dem Wiederverkaufswert-Rechner erhältst du eine ungefähre Vorhersage für den Preis, den heute oder in der Zukunft für den Verkauf deines Autos erhälst")
     
     #Anweisungen an den User
     st.markdown("Wir bitten dich deshalb, einige Angaben über die Daten deines Fahrzeuges zu machen. Zudem solltest du uns, für eine möglichst exakte Berechnung angeben, Informationen zu deinen Fahrgewohnheiten angeben und wie lange du das Auto noch fahren möchtest.")
